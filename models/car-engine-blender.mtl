@@ -1,0 +1,14 @@
+# Blender 4.0.2 MTL File: 'None'
+# www.blender.org
+
+newmtl car-engine_body_pbr
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd car-engine_body_basecolor.jpg
+map_Ns car-engine_body_metallic-car-engine_body_roughness_roughness.jpg
+map_refl car-engine_body_metallic-car-engine_body_roughness_metallic.jpg
+map_Bump -bm 1.000000 car-engine_body_normal.jpg

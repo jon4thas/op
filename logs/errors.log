@@ -1,0 +1,104 @@
+2026-11-17 14:14:02 | ERROR    | Thread-41 (process_request_thread) | BROWSER | ip=127.0.0.1 | page=/ | type=javascript | source=http://127.0.0.1:8000/js/main.js | message=SecurityError: The operation is insecure. | stack=setupPanelToggle@http://127.0.0.1:8000/js/main.js:121:21
+@http://127.0.0.1:8000/js/main.js:145:1
+
+2026-11-17 14:14:17 | ERROR    | Thread-102 (process_request_thread) | BROWSER | ip=127.0.0.1 | page=/ | type=javascript | source=http://127.0.0.1:8000/js/main.js | message=SecurityError: The operation is insecure. | stack=setupPanelToggle@http://127.0.0.1:8000/js/main.js:121:21
+@http://127.0.0.1:8000/js/main.js:145:1
+
+2026-11-17 14:14:20 | ERROR    | Thread-144 (process_request_thread) | BROWSER | ip=127.0.0.1 | page=/ | type=javascript | source=http://127.0.0.1:8000/js/main.js | message=SecurityError: The operation is insecure. | stack=setupPanelToggle@http://127.0.0.1:8000/js/main.js:121:21
+@http://127.0.0.1:8000/js/main.js:145:1
+
+2026-11-17 14:15:04 | ERROR    | Thread-205 (process_request_thread) | BROWSER | ip=127.0.0.1 | page=/ | type=javascript | source=http://127.0.0.1:8000/js/main.js | message=SecurityError: The operation is insecure. | stack=setupPanelToggle@http://127.0.0.1:8000/js/main.js:121:21
+@http://127.0.0.1:8000/js/main.js:145:1
+
+2026-11-17 14:15:28 | ERROR    | Thread-295 (process_request_thread) | BROWSER | ip=127.0.0.1 | page=/ | type=javascript | source=http://127.0.0.1:8000/js/main.js | message=SecurityError: The operation is insecure. | stack=setupPanelToggle@http://127.0.0.1:8000/js/main.js:121:21
+@http://127.0.0.1:8000/js/main.js:145:1
+
+2026-11-17 14:15:31 | ERROR    | Thread-308 (process_request_thread) | BROWSER | ip=127.0.0.1 | page=/ | type=javascript | source=http://127.0.0.1:8000/js/main.js | message=SecurityError: The operation is insecure. | stack=setupPanelToggle@http://127.0.0.1:8000/js/main.js:121:21
+@http://127.0.0.1:8000/js/main.js:145:1
+
+2026-11-17 14:15:34 | ERROR    | Thread-368 (process_request_thread) | BROWSER | ip=127.0.0.1 | page=/ | type=unhandledrejection | source= | message=Error in input stream | stack=
+2026-11-17 14:15:34 | ERROR    | Thread-378 (process_request_thread) | BROWSER | ip=127.0.0.1 | page=/ | type=javascript | source=http://127.0.0.1:8000/js/main.js | message=SecurityError: The operation is insecure. | stack=setupPanelToggle@http://127.0.0.1:8000/js/main.js:121:21
+@http://127.0.0.1:8000/js/main.js:145:1
+
+2026-11-17 14:16:10 | ERROR    | Thread-41 (process_request_thread) | BROWSER | ip=127.0.0.1 | page=/ | type=javascript | source=http://127.0.0.1:8000/js/main.js | message=SecurityError: The operation is insecure. | stack=setupPanelToggle@http://127.0.0.1:8000/js/main.js:121:21
+@http://127.0.0.1:8000/js/main.js:145:1
+
+2026-11-17 14:19:02 | ERROR    | Thread-41 (process_request_thread) | BROWSER | ip=127.0.0.1 | page=/ | type=javascript | source=http://127.0.0.1:8000/js/main.js | message=SecurityError: The operation is insecure. | stack=setupPanelToggle@http://127.0.0.1:8000/js/main.js:121:21
+@http://127.0.0.1:8000/js/main.js:145:1
+
+2026-11-17 14:19:49 | ERROR    | Thread-102 (process_request_thread) | BROWSER | ip=127.0.0.1 | page=/ | type=javascript | source=http://127.0.0.1:8000/js/main.js | message=SecurityError: The operation is insecure. | stack=setupPanelToggle@http://127.0.0.1:8000/js/main.js:121:21
+@http://127.0.0.1:8000/js/main.js:145:1
+
+2026-11-17 14:20:01 | ERROR    | Thread-159 (process_request_thread) | BROWSER | ip=127.0.0.1 | page=/ | type=javascript | source=http://127.0.0.1:8000/js/main.js | message=SecurityError: The operation is insecure. | stack=setupPanelToggle@http://127.0.0.1:8000/js/main.js:121:21
+@http://127.0.0.1:8000/js/main.js:145:1
+
+2026-11-17 14:20:54 | ERROR    | Thread-42 (process_request_thread) | BROWSER | ip=127.0.0.1 | page=/ | type=javascript | source=http://127.0.0.1:8000/js/main.js | message=SecurityError: The operation is insecure. | stack=setupPanelToggle@http://127.0.0.1:8000/js/main.js:121:21
+@http://127.0.0.1:8000/js/main.js:145:1
+
+2026-11-17 14:21:25 | ERROR    | Thread-103 (process_request_thread) | BROWSER | ip=127.0.0.1 | page=/ | type=javascript | source=http://127.0.0.1:8000/js/main.js | message=SecurityError: The operation is insecure. | stack=setupPanelToggle@http://127.0.0.1:8000/js/main.js:121:21
+@http://127.0.0.1:8000/js/main.js:145:1
+
+2026-11-17 14:21:37 | ERROR    | Thread-157 (process_request_thread) | BROWSER | ip=127.0.0.1 | page=/ | type=javascript | source=http://127.0.0.1:8000/js/main.js | message=SecurityError: The operation is insecure. | stack=setupPanelToggle@http://127.0.0.1:8000/js/main.js:121:21
+@http://127.0.0.1:8000/js/main.js:145:1
+
+2026-11-17 14:48:46 | ERROR    | Thread-489 (process_request_thread) | BROWSER | ip=127.0.0.1 | page=/ | type=javascript | source=http://127.0.0.1:8000/js/main.js | message=SyntaxError: missing ) after formal parameters | stack=
+2026-11-17 14:49:05 | ERROR    | Thread-495 (process_request_thread) | BROWSER | ip=127.0.0.1 | page=/ | type=javascript | source=http://127.0.0.1:8000/js/main.js | message=SyntaxError: missing ) after formal parameters | stack=
+2026-11-17 14:50:33 | ERROR    | Thread-501 (process_request_thread) | BROWSER | ip=127.0.0.1 | page=/ | type=javascript | source=http://127.0.0.1:8000/js/main.js | message=SyntaxError: missing ) after formal parameters | stack=
+2026-11-17 14:54:47 | ERROR    | Thread-507 (process_request_thread) | BROWSER | ip=127.0.0.1 | page=/ | type=javascript | source=http://127.0.0.1:8000/js/main.js | message=SyntaxError: missing ) after formal parameters | stack=
+2026-11-17 14:54:52 | ERROR    | Thread-513 (process_request_thread) | BROWSER | ip=127.0.0.1 | page=/ | type=javascript | source=http://127.0.0.1:8000/js/main.js | message=SyntaxError: missing ) after formal parameters | stack=
+2026-11-17 14:55:25 | ERROR    | Thread-519 (process_request_thread) | BROWSER | ip=127.0.0.1 | page=/ | type=javascript | source=http://127.0.0.1:8000/js/main.js | message=SyntaxError: missing ) after formal parameters | stack=
+2026-11-17 14:56:22 | ERROR    | Thread-525 (process_request_thread) | BROWSER | ip=127.0.0.1 | page=/ | type=javascript | source=http://127.0.0.1:8000/js/main.js | message=SyntaxError: missing ) after formal parameters | stack=
+2026-11-17 14:56:30 | ERROR    | Thread-531 (process_request_thread) | BROWSER | ip=127.0.0.1 | page=/ | type=javascript | source=http://127.0.0.1:8000/js/main.js | message=SyntaxError: missing ) after formal parameters | stack=
+2026-11-17 15:00:05 | ERROR    | Thread-538 (process_request_thread) | BROWSER | ip=127.0.0.1 | page=/ | type=javascript | source=http://127.0.0.1:8000/js/main.js | message=SyntaxError: missing ) after formal parameters | stack=
+2026-11-17 15:00:09 | ERROR    | Thread-544 (process_request_thread) | BROWSER | ip=127.0.0.1 | page=/ | type=javascript | source=http://127.0.0.1:8000/js/main.js | message=SyntaxError: missing ) after formal parameters | stack=
+2026-11-17 15:03:50 | ERROR    | Thread-5 (process_request_thread) | BROWSER | ip=127.0.0.1 | page=/ | type=javascript | source=http://127.0.0.1:8000/js/main.js | message=SyntaxError: missing ) after formal parameters | stack=
+2026-11-17 15:37:56 | ERROR    | Thread-516 (process_request_thread) | BROWSER | ip=127.0.0.1 | page=/ | type=javascript | source=http://127.0.0.1:8000/ | message=TypeError: window.OZ.fecharViewerLoja is not a function | stack=onclick@http://127.0.0.1:8000/:1:11
+
+2026-11-17 15:37:58 | ERROR    | Thread-517 (process_request_thread) | BROWSER | ip=127.0.0.1 | page=/ | type=javascript | source=http://127.0.0.1:8000/ | message=TypeError: window.OZ.fecharViewerLoja is not a function | stack=onclick@http://127.0.0.1:8000/:1:11
+
+2026-11-17 15:37:59 | ERROR    | Thread-518 (process_request_thread) | BROWSER | ip=127.0.0.1 | page=/ | type=javascript | source=http://127.0.0.1:8000/ | message=TypeError: window.OZ.fecharViewerLoja is not a function | stack=onclick@http://127.0.0.1:8000/:1:11
+
+2026-11-17 15:38:04 | ERROR    | Thread-519 (process_request_thread) | BROWSER | ip=127.0.0.1 | page=/ | type=javascript | source=http://127.0.0.1:8000/ | message=TypeError: window.OZ.fecharViewerLoja is not a function | stack=onclick@http://127.0.0.1:8000/:1:11
+
+2026-11-17 15:38:04 | ERROR    | Thread-520 (process_request_thread) | BROWSER | ip=127.0.0.1 | page=/ | type=javascript | source=http://127.0.0.1:8000/ | message=TypeError: window.OZ.fecharViewerLoja is not a function | stack=onclick@http://127.0.0.1:8000/:1:11
+
+2026-11-17 15:38:11 | ERROR    | Thread-521 (process_request_thread) | BROWSER | ip=127.0.0.1 | page=/ | type=javascript | source=http://127.0.0.1:8000/ | message=TypeError: window.OZ.fecharViewerLoja is not a function | stack=onclick@http://127.0.0.1:8000/:1:11
+
+2026-11-17 15:38:11 | ERROR    | Thread-522 (process_request_thread) | BROWSER | ip=127.0.0.1 | page=/ | type=javascript | source=http://127.0.0.1:8000/ | message=TypeError: window.OZ.fecharViewerLoja is not a function | stack=onclick@http://127.0.0.1:8000/:1:11
+
+2026-11-17 15:38:11 | ERROR    | Thread-523 (process_request_thread) | BROWSER | ip=127.0.0.1 | page=/ | type=javascript | source=http://127.0.0.1:8000/ | message=TypeError: window.OZ.fecharViewerLoja is not a function | stack=onclick@http://127.0.0.1:8000/:1:11
+
+2026-11-17 15:39:37 | ERROR    | Thread-597 (process_request_thread) | BROWSER | ip=127.0.0.1 | page=/ | type=javascript | source=http://127.0.0.1:8000/ | message=TypeError: window.OZ.fecharViewerLoja is not a function | stack=onclick@http://127.0.0.1:8000/:1:11
+
+2026-11-17 15:39:37 | ERROR    | Thread-598 (process_request_thread) | BROWSER | ip=127.0.0.1 | page=/ | type=javascript | source=http://127.0.0.1:8000/ | message=TypeError: window.OZ.fecharViewerLoja is not a function | stack=onclick@http://127.0.0.1:8000/:1:11
+
+2026-11-17 15:40:28 | ERROR    | Thread-599 (process_request_thread) | BROWSER | ip=127.0.0.1 | page=/ | type=javascript | source=http://127.0.0.1:8000/ | message=TypeError: window.OZ.fecharViewerLoja is not a function | stack=onclick@http://127.0.0.1:8000/:1:11
+
+2026-11-17 15:40:29 | ERROR    | Thread-600 (process_request_thread) | BROWSER | ip=127.0.0.1 | page=/ | type=javascript | source=http://127.0.0.1:8000/ | message=TypeError: window.OZ.fecharViewerLoja is not a function | stack=onclick@http://127.0.0.1:8000/:1:11
+
+2026-11-17 15:49:22 | ERROR    | Thread-726 (process_request_thread) | BROWSER | ip=127.0.0.1 | page=/ | type=unhandledrejection | source= | message=Error in input stream | stack=
+2026-11-17 15:53:56 | ERROR    | Thread-140 (process_request_thread) | BROWSER | ip=127.0.0.1 | page=/ | type=unhandledrejection | source= | message=Error in input stream | stack=
+2026-11-17 16:43:47 | ERROR    | Thread-844 (process_request_thread) | BROWSER | ip=127.0.0.1 | page=/ | type=javascript | source=http://127.0.0.1:8000/js/ui/screens.js | message=SyntaxError: The requested module 'http://127.0.0.1:8000/js/ui/screens/flow-screens.js' doesn't provide an export named: 'renderWorkshop' | stack=
+2026-11-17 16:43:54 | ERROR    | Thread-896 (process_request_thread) | BROWSER | ip=127.0.0.1 | page=/ | type=javascript | source=http://127.0.0.1:8000/js/ui/screens.js | message=SyntaxError: The requested module 'http://127.0.0.1:8000/js/ui/screens/flow-screens.js' doesn't provide an export named: 'renderWorkshop' | stack=
+2026-11-17 16:46:49 | ERROR    | Thread-949 (process_request_thread) | BROWSER | ip=127.0.0.1 | page=/ | type=javascript | source=http://127.0.0.1:8000/js/ui/screens.js | message=SyntaxError: The requested module 'http://127.0.0.1:8000/js/ui/screens/flow-screens.js' doesn't provide an export named: 'renderWorkshop' | stack=
+2026-11-17 16:47:05 | ERROR    | Thread-1006 (process_request_thread) | BROWSER | ip=127.0.0.1 | page=/ | type=unhandledrejection | source= | message=Error in input stream | stack=
+2026-11-17 16:55:10 | ERROR    | Thread-1132 (process_request_thread) | BROWSER | ip=127.0.0.1 | page=/ | type=javascript | source=http://127.0.0.1:8000/js/main.js | message=TypeError: (intermediate value).setPhase is not a function | stack=@http://127.0.0.1:8000/js/main.js:47:6
+
+2026-11-17 16:55:31 | ERROR    | Thread-1206 (process_request_thread) | BROWSER | ip=127.0.0.1 | page=/ | type=javascript | source=http://127.0.0.1:8000/js/main.js | message=TypeError: (intermediate value).setPhase is not a function | stack=@http://127.0.0.1:8000/js/main.js:47:6
+
+2026-11-17 16:55:56 | ERROR    | Thread-1277 (process_request_thread) | BROWSER | ip=127.0.0.1 | page=/ | type=javascript | source=http://127.0.0.1:8000/js/ui/screens.js | message=SyntaxError: The requested module 'http://127.0.0.1:8000/js/ui/screens/flow-screens.js' doesn't provide an export named: 'renderRecepcao' | stack=
+2026-11-17 16:55:59 | ERROR    | Thread-1329 (process_request_thread) | BROWSER | ip=127.0.0.1 | page=/ | type=javascript | source=http://127.0.0.1:8000/js/ui/screens.js | message=SyntaxError: The requested module 'http://127.0.0.1:8000/js/ui/screens/flow-screens.js' doesn't provide an export named: 'renderRecepcao' | stack=
+2026-11-17 17:02:08 | ERROR    | Thread-1381 (process_request_thread) | BROWSER | ip=127.0.0.1 | page=/ | type=javascript | source=http://127.0.0.1:8000/js/ui/screens.js | message=SyntaxError: The requested module 'http://127.0.0.1:8000/js/ui/screens/flow-screens.js' doesn't provide an export named: 'renderWorkshop' | stack=
+2026-11-17 17:02:12 | ERROR    | Thread-1433 (process_request_thread) | BROWSER | ip=127.0.0.1 | page=/ | type=javascript | source=http://127.0.0.1:8000/js/ui/screens.js | message=SyntaxError: The requested module 'http://127.0.0.1:8000/js/ui/screens/flow-screens.js' doesn't provide an export named: 'renderWorkshop' | stack=
+2026-11-17 17:06:24 | ERROR    | Thread-1485 (process_request_thread) | BROWSER | ip=127.0.0.1 | page=/ | type=javascript | source=http://127.0.0.1:8000/js/ui/screens.js | message=SyntaxError: The requested module 'http://127.0.0.1:8000/js/ui/screens/flow-screens.js' doesn't provide an export named: 'renderWorkshop' | stack=
+2026-11-17 17:06:54 | ERROR    | Thread-1537 (process_request_thread) | BROWSER | ip=127.0.0.1 | page=/ | type=javascript | source=http://127.0.0.1:8000/js/ui/screens.js | message=SyntaxError: The requested module 'http://127.0.0.1:8000/js/ui/screens/flow-screens.js' doesn't provide an export named: 'renderWorkshop' | stack=
+2026-11-17 17:08:10 | ERROR    | Thread-1592 (process_request_thread) | BROWSER | ip=127.0.0.1 | page=/ | type=javascript | source=http://127.0.0.1:8000/js/main.js | message=TypeError: (intermediate value).setPhase is not a function | stack=@http://127.0.0.1:8000/js/main.js:47:6
+
+2026-11-17 17:08:18 | ERROR    | Thread-1666 (process_request_thread) | BROWSER | ip=127.0.0.1 | page=/ | type=javascript | source=http://127.0.0.1:8000/js/main.js | message=TypeError: (intermediate value).setPhase is not a function | stack=@http://127.0.0.1:8000/js/main.js:47:6
+
+2026-11-17 17:10:05 | ERROR    | Thread-1740 (process_request_thread) | BROWSER | ip=127.0.0.1 | page=/ | type=javascript | source=http://127.0.0.1:8000/js/main.js | message=TypeError: (intermediate value).setPhase is not a function | stack=@http://127.0.0.1:8000/js/main.js:47:6
+
+2026-11-17 17:10:10 | ERROR    | Thread-1814 (process_request_thread) | BROWSER | ip=127.0.0.1 | page=/ | type=javascript | source=http://127.0.0.1:8000/js/main.js | message=TypeError: (intermediate value).setPhase is not a function | stack=@http://127.0.0.1:8000/js/main.js:47:6
+
+2026-11-17 17:10:15 | ERROR    | Thread-1888 (process_request_thread) | BROWSER | ip=127.0.0.1 | page=/ | type=javascript | source=http://127.0.0.1:8000/js/main.js | message=TypeError: (intermediate value).setPhase is not a function | stack=@http://127.0.0.1:8000/js/main.js:47:6
+

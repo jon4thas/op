@@ -1,0 +1,310 @@
+{
+  "frames": {
+    "child_iso_idle_S_00": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 256,
+        "h": 256
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 256,
+        "h": 256
+      },
+      "sourceSize": {
+        "w": 256,
+        "h": 256
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.8125
+      }
+    },
+    "child_iso_idle_SW_00": {
+      "frame": {
+        "x": 0,
+        "y": 256,
+        "w": 256,
+        "h": 256
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 256,
+        "h": 256
+      },
+      "sourceSize": {
+        "w": 256,
+        "h": 256
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.8125
+      }
+    },
+    "child_iso_idle_W_00": {
+      "frame": {
+        "x": 0,
+        "y": 512,
+        "w": 256,
+        "h": 256
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 256,
+        "h": 256
+      },
+      "sourceSize": {
+        "w": 256,
+        "h": 256
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.8125
+      }
+    },
+    "child_iso_idle_NW_00": {
+      "frame": {
+        "x": 0,
+        "y": 768,
+        "w": 256,
+        "h": 256
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 256,
+        "h": 256
+      },
+      "sourceSize": {
+        "w": 256,
+        "h": 256
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.8125
+      }
+    },
+    "child_iso_idle_N_00": {
+      "frame": {
+        "x": 0,
+        "y": 1024,
+        "w": 256,
+        "h": 256
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 256,
+        "h": 256
+      },
+      "sourceSize": {
+        "w": 256,
+        "h": 256
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.8125
+      }
+    },
+    "child_iso_idle_NE_00": {
+      "frame": {
+        "x": 0,
+        "y": 1280,
+        "w": 256,
+        "h": 256
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 256,
+        "h": 256
+      },
+      "sourceSize": {
+        "w": 256,
+        "h": 256
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.8125
+      }
+    },
+    "child_iso_idle_E_00": {
+      "frame": {
+        "x": 0,
+        "y": 1536,
+        "w": 256,
+        "h": 256
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 256,
+        "h": 256
+      },
+      "sourceSize": {
+        "w": 256,
+        "h": 256
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.8125
+      }
+    },
+    "child_iso_idle_SE_00": {
+      "frame": {
+        "x": 0,
+        "y": 1792,
+        "w": 256,
+        "h": 256
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 256,
+        "h": 256
+      },
+      "sourceSize": {
+        "w": 256,
+        "h": 256
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.8125
+      }
+    }
+  },
+  "animations": {
+    "idle_S": [
+      "child_iso_idle_S_00"
+    ],
+    "idle_SW": [
+      "child_iso_idle_SW_00"
+    ],
+    "idle_W": [
+      "child_iso_idle_W_00"
+    ],
+    "idle_NW": [
+      "child_iso_idle_NW_00"
+    ],
+    "idle_N": [
+      "child_iso_idle_N_00"
+    ],
+    "idle_NE": [
+      "child_iso_idle_NE_00"
+    ],
+    "idle_E": [
+      "child_iso_idle_E_00"
+    ],
+    "idle_SE": [
+      "child_iso_idle_SE_00"
+    ]
+  },
+  "meta": {
+    "app": "Grab3D",
+    "version": "1.0",
+    "image": "child_iso_idle.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 256,
+      "h": 2048
+    },
+    "scale": "1",
+    "grab3d": {
+      "kit": "Character Sprites, 8 Directions",
+      "license": "CC0 1.0",
+      "author": "grab3d",
+      "url": "https://grab3d.com",
+      "cellSize": 256,
+      "isoTile": {
+        "w": 128,
+        "h": 64,
+        "meters": 1
+      },
+      "pixelsPerMeter": {
+        "isoHorizontal": 90.51,
+        "isoVertical": 78.384,
+        "side": 64
+      },
+      "pivot": {
+        "iso": {
+          "x": 0.5,
+          "y": 0.8125
+        },
+        "side": {
+          "x": 0.5,
+          "y": 0.875
+        }
+      },
+      "pivotMeaning": "point on the floor between the feet",
+      "camera": {
+        "iso": "orthographic, true 2:1 isometric (dimetric), elevation 30 deg, azimuth 45 deg, same scale as Cozy Isometric Furniture Sprites",
+        "side": "orthographic, level, platformer side view"
+      },
+      "directions": "screen direction the character faces and walks: S faces the viewer, N faces away, SE/SW/NE/NW run along the 2:1 floor grid lines, E/W/N/S along the tile diagonals",
+      "frameRate": {
+        "idle": 1,
+        "walk": 12,
+        "run": 12
+      },
+      "loop": {
+        "idle": false,
+        "walk": true,
+        "run": true
+      },
+      "character": "child",
+      "figure": {
+        "heightM": 1.233,
+        "groundSpeedMps": {
+          "walk": 0.98,
+          "run": 3.287
+        },
+        "cycleSeconds": {
+          "walk": 1.042,
+          "run": 0.625
+        },
+        "idle": "single still frame made from the walk cycle (legs in rest pose), no breathing animation"
+      },
+      "outlinePx": {
+        "2x": 1,
+        "1x": 1
+      },
+      "view": "iso",
+      "animation": "idle",
+      "grid": {
+        "columns": 1,
+        "rows": 8,
+        "cell": 256,
+        "rowDirections": [
+          "S",
+          "SW",
+          "W",
+          "NW",
+          "N",
+          "NE",
+          "E",
+          "SE"
+        ]
+      }
+    }
+  }
+}

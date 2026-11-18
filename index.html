@@ -1,0 +1,221 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#050810">
+  <title>Manutenção de Sistemas 2026.2 — Level 01</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "./lib/three.module.js",
+      "three/addons/": "./lib/addons/",
+      "cannon-es": "./lib/cannon-es.js"
+    }
+  }
+  </script>
+</head>
+
+<body>
+<div id="app">
+
+  <main id="viewport">
+    <canvas id="scene"></canvas>
+
+    <!-- HUD SUPERIOR -->
+    <header id="hud-top">
+      <div class="hud-brand">
+        <span class="brand-symbol">⌘</span>
+        <div>
+          <span class="brand-title">UC // MANUTENÇÃO DE SISTEMAS</span>
+          <span class="brand-subtitle">AMBIENTE DE SIMULAÇÃO · 2026.2</span>
+        </div>
+      </div>
+
+      <div class="hud-status">
+        <span class="status-dot"></span>
+        SISTEMA ONLINE
+      </div>
+    </header>
+
+    <!-- TELAS DINÂMICAS -->
+    <div id="screens-overlay"></div>
+
+    <!-- HUD DA OFICINA -->
+    <div id="workshop-hud" style="display:none">
+
+      <div id="crosshair"></div>
+
+      <div id="interaction-prompt"></div>
+
+    </div>
+
+    <!-- LOJA -->
+    <div id="shop-hud" style="display:none">
+      <button id="shop-open-button" onclick="window.OZ.abrirLoja()">
+        <span class="shop-icon">◈</span>
+        <span>INVENTÁRIO</span>
+        <span id="shop-money">X-X</span>
+      </button>
+    </div>
+
+    <!-- AJUDA -->
+    <button id="btn-help" style="display:none">
+      <span>?</span>
+      <span>COMANDOS</span>
+    </button>
+
+    <!-- MODAL DE AJUDA -->
+    <div id="help-modal" style="display:none"
+         role="dialog"
+         aria-modal="true"
+         aria-labelledby="help-title">
+
+      <div class="modal-scanline"></div>
+
+      <div class="modal-topline">
+        <span class="modal-system">SYS.HELP // TERMINAL</span>
+        <span class="modal-live"><i></i> ONLINE</span>
+      </div>
+
+      <div class="modal-heading">
+        <div class="ascii-mark" aria-hidden="true">
+          <pre>
+    ╔══════════════╗
+    ║  ACCESS // 01 ║
+    ║  ░▒▓ COMMAND ║
+    ╚══════════════╝
+          </pre>
+        </div>
+
+        <div>
+          <span class="eyebrow">DOCUMENTAÇÃO DO SISTEMA</span>
+          <h2 id="help-title">Central de comandos<span>_</span></h2>
+          <p class="modal-description">
+            Protocolo de operação do ambiente de simulação.
+          </p>
+        </div>
+      </div>
+
+      <div class="modal-divider">
+        <span>INPUT / OUTPUT</span>
+        <span>━━━━━━━━━━━━━━━━━━━━</span>
+      </div>
+
+      <div class="help-content">
+
+        <section class="help-section">
+          <h3><span class="section-index">01</span> MOVIMENTAÇÃO</h3>
+          <ul>
+            <li><kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd><span>Mover personagem</span></li>
+            <li><kbd>SHIFT</kbd><span>Correr</span></li>
+            <li><kbd>SPACE</kbd><span>Pular</span></li>
+            <li><kbd>A / D</kbd><span>Movimento lateral</span></li>
+          </ul>
+        </section>
+
+        <section class="help-section">
+          <h3><span class="section-index">02</span> CÂMERA</h3>
+          <ul>
+            <li><kbd>MOUSE</kbd><span>Arrastar para girar</span></li>
+            <li><kbd>SCROLL</kbd><span>Controlar zoom</span></li>
+          </ul>
+        </section>
+
+        <section class="help-section">
+          <h3><span class="section-index">03</span> INTERAÇÃO</h3>
+          <ul>
+            <li><kbd>E</kbd><span>Iniciar desafio na estação</span></li>
+            <li><kbd>LOJA</kbd><span>Acessar inventário</span></li>
+            <li><kbd>◀ / ▶</kbd><span>Recolher / expandir painel</span></li>
+            <li><kbd>?</kbd><span>Abrir central de comandos</span></li>
+            <li><kbd>ESC</kbd><span>Fechar / cancelar</span></li>
+          </ul>
+        </section>
+
+        <section class="help-section easter-section">
+          <h3><span class="section-index">04</span> EASTER EGGS // SEQUÊNCIAS DUPLAS</h3>
+          <ul>
+            <li><kbd>Q Q</kbd><span>Dançar</span></li>
+            <li><kbd>C C</kbd><span>Escalar</span></li>
+            <li><kbd>K K</kbd><span>Andar de skate</span></li>
+            <li><kbd>G G</kbd><span>Tocar guitarra</span></li>
+            <li><kbd>R R</kbd><span>Tocar bateria</span></li>
+            <li><kbd>F F</kbd><span>Comemorar</span></li>
+            <li><kbd>P P</kbd><span>Pegar objeto</span></li>
+            <li><kbd>J J</kbd><span>Pulo alegre</span></li>
+            <li><kbd>X X</kbd><span>Sentar / alternar</span></li>
+            <li><kbd>Z Z</kbd><span>Deitar / alternar</span></li>
+          </ul>
+        </section>
+
+      </div>
+
+      <div class="modal-footer">
+        <div class="footer-terminal">
+          <span class="terminal-prompt">root@uc:~$</span>
+          help --manual
+        </div>
+
+        <button id="btn-close-help">
+          <span>FECHAR TERMINAL</span>
+          <kbd>ESC</kbd>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- TOAST -->
+    <div id="hint" class="hidden"></div>
+
+  </main>
+
+  <!-- PAINEL LATERAL -->
+  <aside id="panel">
+
+    <div id="panel-head">
+      <div class="panel-heading">
+        <div class="panel-kicker">
+          <span class="status-dot"></span>
+          INTERFACE DE CONTROLE
+        </div>
+
+        <div class="panel-title-row">
+          <div>
+            <h1 id="panel-title">Oficina</h1>
+            <p id="panel-sub">Aguardando ação</p>
+          </div>
+
+          <button id="btn-toggle-panel" title="Ocultar painel">
+            ◀
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="panel-body">
+      <div id="panel-content"></div>
+    </div>
+
+    <div class="panel-bottom">
+      <span>UC // SYSTEMS LAB</span>
+      <span>BUILD 2026.2</span>
+    </div>
+
+  </aside>
+
+</div>
+
+<!-- REABRIR PAINEL -->
+<button id="btn-show-panel" title="Mostrar painel">
+  <span>▶</span>
+</button>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
+

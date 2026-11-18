@@ -1,0 +1,244 @@
+/* =========================================================
+   05-HUD
+   HUD top, oficina, loja, botão de ajuda
+   ========================================================= */
+
+/* ── HUD SUPERIOR ─────────────────────────────────────── */
+
+#hud-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  min-height: 66px;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 24px;
+  background: linear-gradient(
+    180deg,
+    rgba(3, 8, 17, .96),
+    rgba(3, 8, 17, .68),
+    transparent
+  );
+  pointer-events: none;
+}
+
+.hud-brand {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+
+.brand-symbol {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(0, 240, 255, .45);
+  color: var(--cy-cyan);
+  background: rgba(0, 240, 255, .07);
+  font-size: 24px;
+  box-shadow: 0 0 18px rgba(0, 240, 255, .12);
+}
+
+.brand-title {
+  display: block;
+  color: #e5f8ff;
+  font-family: var(--cy-display);
+  font-size: 12px;
+  letter-spacing: 1.8px;
+  font-weight: 700;
+}
+
+.brand-subtitle {
+  display: block;
+  margin-top: 5px;
+  color: var(--cy-muted);
+  font-size: 9px;
+  letter-spacing: 1.5px;
+}
+
+.hud-status {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--cy-green);
+  font-size: 10px;
+  letter-spacing: 1.5px;
+}
+
+.status-dot,
+.hud-status .status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--cy-green);
+  box-shadow: 0 0 12px var(--cy-green);
+  animation: statusPulse 1.8s infinite;
+}
+
+@keyframes statusPulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: .35; }
+}
+
+/* ── HUD DA OFICINA ───────────────────────────────────── */
+
+#workshop-hud {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  pointer-events: none;
+}
+
+#crosshair {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  transform: translate(-50%, -50%);
+  border: 1px solid var(--cy-cyan);
+  border-radius: 50%;
+  box-shadow: 0 0 12px rgba(0, 240, 255, .65);
+}
+
+#interaction-prompt {
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 13px 22px;
+  border: 1px solid rgba(0, 240, 255, .65);
+  background: rgba(4, 13, 25, .92);
+  color: #e9fbff;
+  font-family: var(--cy-font);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .8px;
+  white-space: nowrap;
+  box-shadow:
+    0 0 25px rgba(0, 240, 255, .12),
+    inset 0 0 18px rgba(0, 240, 255, .06);
+  backdrop-filter: blur(12px);
+}
+
+#interaction-prompt::before {
+  content: '▶ INTERACT // ';
+  color: var(--cy-green);
+}
+
+/* ── LOJA (botão flutuante) ───────────────────────────── */
+
+#shop-hud {
+  position: absolute;
+  top: 83px;
+  right: 22px;
+  z-index: 35;
+  pointer-events: auto;
+}
+
+#shop-open-button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 17px;
+  border: 1px solid rgba(255, 209, 102, .45);
+  background: rgba(13, 17, 29, .92);
+  color: var(--cy-yellow);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  backdrop-filter: blur(12px);
+  transition: .2s ease;
+}
+
+#shop-open-button:hover {
+  border-color: var(--cy-yellow);
+  background: rgba(255, 209, 102, .12);
+  box-shadow: 0 0 24px rgba(255, 209, 102, .14);
+  transform: translateY(-2px);
+}
+
+.shop-icon {
+  font-size: 21px;
+  color: var(--cy-yellow);
+}
+
+#shop-money {
+  padding: 5px 9px;
+  background: rgba(255, 209, 102, .10);
+  border: 1px solid rgba(255, 209, 102, .2);
+  color: var(--cy-yellow);
+  font-size: 12px;
+}
+
+/* ── BOTÃO AJUDA ──────────────────────────────────────── */
+
+#btn-help {
+  position: absolute;
+  left: 22px;
+  bottom: 22px;
+  z-index: 80;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 17px;
+  border: 1px solid rgba(0, 240, 255, .5);
+  background: rgba(5, 13, 25, .94);
+  color: var(--cy-cyan);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  box-shadow: 0 0 20px rgba(0, 240, 255, .08);
+  transition: .2s ease;
+}
+
+#btn-help span:first-child {
+  width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--cy-cyan);
+}
+
+#btn-help:hover {
+  background: rgba(0, 240, 255, .13);
+  box-shadow: 0 0 24px rgba(0, 240, 255, .2);
+  transform: translateY(-3px);
+}
+
+/* ── RESPONSIVIDADE ───────────────────────────────────── */
+
+@media (max-width: 650px) {
+  #hud-top {
+    padding: 10px 13px;
+  }
+
+  .brand-title {
+    font-size: 9px;
+    letter-spacing: .8px;
+  }
+
+  .brand-subtitle {
+    font-size: 8px;
+  }
+
+  .hud-status {
+    font-size: 8px;
+  }
+
+  #shop-hud {
+    top: 75px;
+    right: 10px;
+  }
+
+  #btn-help {
+    left: 10px;
+    bottom: 12px;
+  }
+}

@@ -1,0 +1,373 @@
+2026-11-17 10:39:16 | INFO     | MainThread | LOGIC v2.0.0 iniciando.
+2026-11-17 10:39:16 | INFO     | MainThread | Modo de rede: LOCAL
+2026-11-17 10:39:16 | INFO     | LOGIC-HTTP | Servidor ativo em 127.0.0.1:8000
+2026-11-17 10:39:16 | INFO     | LOGIC-HTTP | Raiz pública: /home/linx/Área de Trabalho/op
+2026-11-17 10:39:16 | INFO     | LOGIC-HTTP | Logs persistentes: /home/linx/Área de Trabalho/op/logs
+2026-11-17 10:39:16 | INFO     | LOGIC-Watcher | Monitoramento de arquivos iniciado.
+2026-11-17 10:39:18 | INFO     | Thread-1 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 10:39:18 | INFO     | Thread-2 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 10:39:18 | INFO     | Thread-3 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 11:23:11 | INFO     | MainThread | LOGIC encerrado.
+2026-11-17 14:13:27 | INFO     | MainThread | LOGIC v2.0.0 iniciando.
+2026-11-17 14:13:27 | INFO     | MainThread | Modo de rede: LOCAL
+2026-11-17 14:13:27 | INFO     | LOGIC-HTTP | Servidor ativo em 127.0.0.1:8000
+2026-11-17 14:13:27 | INFO     | LOGIC-HTTP | Raiz pública: /home/linx/Área de Trabalho/op
+2026-11-17 14:13:27 | INFO     | LOGIC-HTTP | Logs persistentes: /home/linx/Área de Trabalho/op/logs
+2026-11-17 14:13:27 | INFO     | LOGIC-Watcher | Monitoramento de arquivos iniciado.
+2026-11-17 14:14:01 | INFO     | Thread-19 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 14:14:17 | INFO     | Thread-79 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 14:14:20 | INFO     | Thread-121 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 14:15:04 | INFO     | Thread-182 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 14:15:27 | INFO     | LOGIC-Watcher | Arquivo alterado: js/main.js
+2026-11-17 14:15:27 | INFO     | LOGIC-Watcher | Hot Reload disparado.
+2026-11-17 14:15:27 | INFO     | Thread-232 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 14:15:27 | INFO     | Thread-254 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 14:15:33 | INFO     | Thread-350 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 14:15:51 | INFO     | LOGIC-Watcher | Arquivo alterado: js/main.js
+2026-11-17 14:15:51 | INFO     | LOGIC-Watcher | Hot Reload disparado.
+2026-11-17 14:16:02 | INFO     | MainThread | LOGIC encerrado.
+2026-11-17 14:16:05 | INFO     | MainThread | LOGIC v2.0.0 iniciando.
+2026-11-17 14:16:05 | INFO     | MainThread | Modo de rede: LOCAL
+2026-11-17 14:16:05 | INFO     | LOGIC-HTTP | Servidor ativo em 127.0.0.1:8000
+2026-11-17 14:16:05 | INFO     | LOGIC-HTTP | Raiz pública: /home/linx/Área de Trabalho/op
+2026-11-17 14:16:05 | INFO     | LOGIC-HTTP | Logs persistentes: /home/linx/Área de Trabalho/op/logs
+2026-11-17 14:16:05 | INFO     | LOGIC-Watcher | Monitoramento de arquivos iniciado.
+2026-11-17 14:16:10 | INFO     | Thread-19 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 14:17:05 | INFO     | MainThread | LOGIC encerrado.
+2026-11-17 14:18:57 | INFO     | MainThread | LOGIC v2.0.0 iniciando.
+2026-11-17 14:18:57 | INFO     | MainThread | Modo de rede: LOCAL
+2026-11-17 14:18:57 | INFO     | LOGIC-HTTP | Servidor ativo em 127.0.0.1:8000
+2026-11-17 14:18:57 | INFO     | LOGIC-HTTP | Raiz pública: /home/linx/Área de Trabalho/op
+2026-11-17 14:18:57 | INFO     | LOGIC-HTTP | Logs persistentes: /home/linx/Área de Trabalho/op/logs
+2026-11-17 14:18:57 | INFO     | LOGIC-Watcher | Monitoramento de arquivos iniciado.
+2026-11-17 14:19:02 | INFO     | Thread-18 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 14:19:48 | INFO     | LOGIC-Watcher | Arquivo alterado: js/game/player.js
+2026-11-17 14:19:48 | INFO     | LOGIC-Watcher | Hot Reload disparado.
+2026-11-17 14:19:48 | INFO     | Thread-80 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 14:20:01 | INFO     | Thread-127 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 14:20:42 | INFO     | MainThread | LOGIC encerrado.
+2026-11-17 14:20:43 | INFO     | MainThread | LOGIC v2.0.0 iniciando.
+2026-11-17 14:20:43 | INFO     | MainThread | Modo de rede: LOCAL
+2026-11-17 14:20:43 | INFO     | LOGIC-HTTP | Servidor ativo em 127.0.0.1:8000
+2026-11-17 14:20:43 | INFO     | LOGIC-HTTP | Raiz pública: /home/linx/Área de Trabalho/op
+2026-11-17 14:20:43 | INFO     | LOGIC-HTTP | Logs persistentes: /home/linx/Área de Trabalho/op/logs
+2026-11-17 14:20:43 | INFO     | LOGIC-Watcher | Monitoramento de arquivos iniciado.
+2026-11-17 14:20:47 | INFO     | Thread-1 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 14:20:54 | INFO     | Thread-19 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 14:21:25 | INFO     | LOGIC-Watcher | Arquivo alterado: js/game/state.js
+2026-11-17 14:21:25 | INFO     | LOGIC-Watcher | Hot Reload disparado.
+2026-11-17 14:21:25 | INFO     | Thread-80 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 14:21:37 | INFO     | Thread-141 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 14:31:56 | INFO     | LOGIC-Watcher | Arquivo alterado: js/main.js
+2026-11-17 14:31:56 | INFO     | LOGIC-Watcher | Hot Reload disparado.
+2026-11-17 14:31:56 | INFO     | Thread-202 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 14:32:40 | INFO     | Thread-265 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 14:32:55 | INFO     | Thread-324 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 14:43:01 | INFO     | LOGIC-Watcher | Arquivo alterado: styles.css
+2026-11-17 14:43:01 | INFO     | LOGIC-Watcher | Hot Reload disparado.
+2026-11-17 14:43:01 | INFO     | Thread-384 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 14:44:33 | INFO     | LOGIC-Watcher | Arquivo alterado: js/game/missoes/missao01.js
+2026-11-17 14:44:33 | INFO     | LOGIC-Watcher | Hot Reload disparado.
+2026-11-17 14:44:34 | INFO     | Thread-428 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 14:48:46 | INFO     | LOGIC-Watcher | Arquivo alterado: js/main.js
+2026-11-17 14:48:46 | INFO     | LOGIC-Watcher | Hot Reload disparado.
+2026-11-17 14:48:46 | INFO     | Thread-488 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 14:49:05 | INFO     | LOGIC-Watcher | Arquivo alterado: js/game/missoes/index.js
+2026-11-17 14:49:05 | INFO     | LOGIC-Watcher | Hot Reload disparado.
+2026-11-17 14:49:05 | INFO     | Thread-494 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 14:50:33 | INFO     | LOGIC-Watcher | Arquivo alterado: js/game/evaluator.js
+2026-11-17 14:50:33 | INFO     | LOGIC-Watcher | Hot Reload disparado.
+2026-11-17 14:50:33 | INFO     | Thread-500 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 14:54:47 | INFO     | LOGIC-Watcher | Arquivo alterado: js/ui/screens.js
+2026-11-17 14:54:47 | INFO     | LOGIC-Watcher | Hot Reload disparado.
+2026-11-17 14:54:47 | INFO     | Thread-506 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 14:54:52 | INFO     | Thread-512 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 14:55:25 | INFO     | LOGIC-Watcher | Arquivo alterado: js/ui/screens.js
+2026-11-17 14:55:25 | INFO     | LOGIC-Watcher | Hot Reload disparado.
+2026-11-17 14:55:25 | INFO     | Thread-518 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 14:56:22 | INFO     | LOGIC-Watcher | Arquivo alterado: js/ui/screens.js
+2026-11-17 14:56:22 | INFO     | LOGIC-Watcher | Hot Reload disparado.
+2026-11-17 14:56:22 | INFO     | Thread-524 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 14:56:30 | INFO     | Thread-530 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 15:00:04 | INFO     | LOGIC-Watcher | Arquivo alterado: js/ui/screens.js
+2026-11-17 15:00:04 | INFO     | LOGIC-Watcher | Hot Reload disparado.
+2026-11-17 15:00:05 | INFO     | Thread-537 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 15:00:09 | INFO     | Thread-543 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 15:03:39 | INFO     | MainThread | LOGIC encerrado.
+2026-11-17 15:03:43 | INFO     | MainThread | LOGIC v2.0.0 iniciando.
+2026-11-17 15:03:43 | INFO     | MainThread | Modo de rede: LOCAL
+2026-11-17 15:03:43 | INFO     | LOGIC-HTTP | Servidor ativo em 127.0.0.1:8000
+2026-11-17 15:03:43 | INFO     | LOGIC-HTTP | Raiz pública: /home/linx/Área de Trabalho/op
+2026-11-17 15:03:43 | INFO     | LOGIC-HTTP | Logs persistentes: /home/linx/Área de Trabalho/op/logs
+2026-11-17 15:03:43 | INFO     | LOGIC-Watcher | Monitoramento de arquivos iniciado.
+2026-11-17 15:03:44 | INFO     | Thread-1 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 15:03:50 | INFO     | Thread-6 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 15:05:28 | INFO     | LOGIC-Watcher | Arquivo alterado: js/main.js
+2026-11-17 15:05:28 | INFO     | LOGIC-Watcher | Hot Reload disparado.
+2026-11-17 15:05:28 | INFO     | Thread-25 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 15:08:20 | INFO     | LOGIC-Watcher | Arquivo alterado: backup_refactor_20261117_150817/js/game/car.js
+2026-11-17 15:08:20 | INFO     | LOGIC-Watcher | Arquivo alterado: backup_refactor_20261117_150817/js/game/evaluator.js
+2026-11-17 15:08:20 | INFO     | LOGIC-Watcher | Arquivo alterado: backup_refactor_20261117_150817/js/game/flow.js
+2026-11-17 15:08:20 | INFO     | LOGIC-Watcher | Arquivo alterado: backup_refactor_20261117_150817/js/game/input.js
+2026-11-17 15:08:20 | INFO     | LOGIC-Watcher | Arquivo alterado: backup_refactor_20261117_150817/js/game/interactions.js
+2026-11-17 15:08:20 | INFO     | LOGIC-Watcher | Arquivo alterado: backup_refactor_20261117_150817/js/game/missoes/index.js
+2026-11-17 15:08:20 | INFO     | LOGIC-Watcher | Arquivo alterado: backup_refactor_20261117_150817/js/game/missoes/missao01.js
+2026-11-17 15:08:20 | INFO     | LOGIC-Watcher | Arquivo alterado: backup_refactor_20261117_150817/js/game/missoes/missao02.js
+2026-11-17 15:08:20 | INFO     | LOGIC-Watcher | Arquivo alterado: backup_refactor_20261117_150817/js/game/missoes/missao03.js
+2026-11-17 15:08:20 | INFO     | LOGIC-Watcher | Arquivo alterado: backup_refactor_20261117_150817/js/game/missoes/missao04.js
+2026-11-17 15:08:20 | INFO     | LOGIC-Watcher | Arquivo alterado: backup_refactor_20261117_150817/js/game/missoes/missao05.js
+2026-11-17 15:08:20 | INFO     | LOGIC-Watcher | Arquivo alterado: backup_refactor_20261117_150817/js/game/missoes/missao06.js
+2026-11-17 15:08:20 | INFO     | LOGIC-Watcher | Arquivo alterado: backup_refactor_20261117_150817/js/game/missoes/missao07.js
+2026-11-17 15:08:20 | INFO     | LOGIC-Watcher | Arquivo alterado: backup_refactor_20261117_150817/js/game/missoes/missao08.js
+2026-11-17 15:08:20 | INFO     | LOGIC-Watcher | Arquivo alterado: backup_refactor_20261117_150817/js/game/player.js
+2026-11-17 15:08:20 | INFO     | LOGIC-Watcher | Arquivo alterado: backup_refactor_20261117_150817/js/game/shop.js
+2026-11-17 15:08:20 | INFO     | LOGIC-Watcher | Arquivo alterado: backup_refactor_20261117_150817/js/game/state.js
+2026-11-17 15:08:20 | INFO     | LOGIC-Watcher | Arquivo alterado: backup_refactor_20261117_150817/js/game/stations.js
+2026-11-17 15:08:20 | INFO     | LOGIC-Watcher | Arquivo alterado: backup_refactor_20261117_150817/js/main.js
+2026-11-17 15:08:20 | INFO     | LOGIC-Watcher | Arquivo alterado: backup_refactor_20261117_150817/js/physics/world.js
+2026-11-17 15:08:20 | INFO     | LOGIC-Watcher | Arquivo alterado: backup_refactor_20261117_150817/js/ui/panel.js
+2026-11-17 15:08:20 | INFO     | LOGIC-Watcher | Arquivo alterado: backup_refactor_20261117_150817/js/ui/screens.js
+2026-11-17 15:08:20 | INFO     | LOGIC-Watcher | Arquivo alterado: backup_refactor_20261117_150817/js/world/lighting.js
+2026-11-17 15:08:20 | INFO     | LOGIC-Watcher | Arquivo alterado: backup_refactor_20261117_150817/js/world/scene.js
+2026-11-17 15:08:20 | INFO     | LOGIC-Watcher | Arquivo alterado: backup_refactor_20261117_150817/js/world/sky.js
+2026-11-17 15:08:20 | INFO     | LOGIC-Watcher | Arquivo alterado: js/core/collision.js
+2026-11-17 15:08:20 | INFO     | LOGIC-Watcher | Arquivo alterado: js/core/interaction.js
+2026-11-17 15:08:20 | INFO     | LOGIC-Watcher | Arquivo alterado: js/core/loop.js
+2026-11-17 15:08:20 | INFO     | LOGIC-Watcher | Arquivo alterado: js/core/player.js
+2026-11-17 15:08:20 | INFO     | LOGIC-Watcher | Arquivo alterado: js/core/world.js
+2026-11-17 15:08:20 | INFO     | LOGIC-Watcher | Arquivo alterado: js/debug.js
+2026-11-17 15:08:20 | INFO     | LOGIC-Watcher | Arquivo alterado: js/game/oz/genericos.js
+2026-11-17 15:08:20 | INFO     | LOGIC-Watcher | Arquivo alterado: js/game/oz/index.js
+2026-11-17 15:08:20 | INFO     | LOGIC-Watcher | Arquivo alterado: js/game/oz/loja.js
+2026-11-17 15:08:20 | INFO     | LOGIC-Watcher | Arquivo alterado: js/game/oz/missao-01.js
+2026-11-17 15:08:20 | INFO     | LOGIC-Watcher | Arquivo alterado: js/game/oz/missao-lifecycle.js
+2026-11-17 15:08:20 | INFO     | LOGIC-Watcher | Arquivo alterado: js/game/oz/navigation.js
+2026-11-17 15:08:20 | INFO     | LOGIC-Watcher | Arquivo alterado: js/game/oz/state-reset.js
+2026-11-17 15:08:20 | INFO     | LOGIC-Watcher | Arquivo alterado: js/main.js
+2026-11-17 15:08:20 | INFO     | LOGIC-Watcher | Arquivo alterado: js/ui/help.js
+2026-11-17 15:08:20 | INFO     | LOGIC-Watcher | Arquivo alterado: js/ui/panel.js
+2026-11-17 15:08:20 | INFO     | LOGIC-Watcher | Arquivo alterado: js/ui/toast.js
+2026-11-17 15:08:20 | INFO     | LOGIC-Watcher | Hot Reload disparado.
+2026-11-17 15:08:20 | INFO     | Thread-99 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 15:08:29 | INFO     | MainThread | LOGIC encerrado.
+2026-11-17 15:08:31 | INFO     | MainThread | LOGIC v2.0.0 iniciando.
+2026-11-17 15:08:31 | INFO     | MainThread | Modo de rede: LOCAL
+2026-11-17 15:08:31 | INFO     | LOGIC-HTTP | Servidor ativo em 127.0.0.1:8000
+2026-11-17 15:08:31 | INFO     | LOGIC-HTTP | Raiz pública: /home/linx/Área de Trabalho/op
+2026-11-17 15:08:31 | INFO     | LOGIC-HTTP | Logs persistentes: /home/linx/Área de Trabalho/op/logs
+2026-11-17 15:08:31 | INFO     | LOGIC-Watcher | Monitoramento de arquivos iniciado.
+2026-11-17 15:08:34 | INFO     | Thread-1 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 15:08:34 | INFO     | Thread-20 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 15:12:04 | INFO     | MainThread | LOGIC encerrado.
+2026-11-17 15:16:37 | INFO     | MainThread | LOGIC v2.0.0 iniciando.
+2026-11-17 15:16:37 | INFO     | MainThread | Modo de rede: LOCAL
+2026-11-17 15:16:37 | INFO     | LOGIC-HTTP | Servidor ativo em 127.0.0.1:8000
+2026-11-17 15:16:37 | INFO     | LOGIC-HTTP | Raiz pública: /home/linx/Área de Trabalho/op
+2026-11-17 15:16:37 | INFO     | LOGIC-HTTP | Logs persistentes: /home/linx/Área de Trabalho/op/logs
+2026-11-17 15:16:37 | INFO     | LOGIC-Watcher | Monitoramento de arquivos iniciado.
+2026-11-17 15:16:40 | INFO     | Thread-26 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 15:25:33 | INFO     | LOGIC-Watcher | Arquivo alterado: js/game/stations.js
+2026-11-17 15:25:33 | INFO     | LOGIC-Watcher | Hot Reload disparado.
+2026-11-17 15:25:33 | INFO     | Thread-125 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 15:26:27 | INFO     | Thread-195 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 15:29:38 | INFO     | LOGIC-Watcher | Arquivo alterado: js/game/stations.js
+2026-11-17 15:29:38 | INFO     | LOGIC-Watcher | Hot Reload disparado.
+2026-11-17 15:29:38 | INFO     | Thread-257 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 15:31:33 | INFO     | Thread-342 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 15:36:31 | INFO     | LOGIC-Watcher | Arquivo alterado: js/core/interaction.js
+2026-11-17 15:36:31 | INFO     | LOGIC-Watcher | Hot Reload disparado.
+2026-11-17 15:36:32 | INFO     | Thread-414 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 15:37:35 | INFO     | LOGIC-Watcher | Arquivo alterado: js/ui/screens/loja.js
+2026-11-17 15:37:35 | INFO     | LOGIC-Watcher | Hot Reload disparado.
+2026-11-17 15:37:35 | INFO     | Thread-486 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 15:38:14 | INFO     | Thread-542 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 15:40:32 | INFO     | Thread-634 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 15:49:22 | INFO     | LOGIC-Watcher | Arquivo alterado: backup_refactor_20261117_150817/js/game/car.js
+2026-11-17 15:49:22 | INFO     | LOGIC-Watcher | Arquivo alterado: backup_refactor_20261117_150817/js/game/evaluator.js
+2026-11-17 15:49:22 | INFO     | LOGIC-Watcher | Arquivo alterado: backup_refactor_20261117_150817/js/game/flow.js
+2026-11-17 15:49:22 | INFO     | LOGIC-Watcher | Arquivo alterado: backup_refactor_20261117_150817/js/game/input.js
+2026-11-17 15:49:22 | INFO     | LOGIC-Watcher | Arquivo alterado: backup_refactor_20261117_150817/js/game/interactions.js
+2026-11-17 15:49:22 | INFO     | LOGIC-Watcher | Arquivo alterado: backup_refactor_20261117_150817/js/game/missoes/index.js
+2026-11-17 15:49:22 | INFO     | LOGIC-Watcher | Arquivo alterado: backup_refactor_20261117_150817/js/game/missoes/missao01.js
+2026-11-17 15:49:22 | INFO     | LOGIC-Watcher | Arquivo alterado: backup_refactor_20261117_150817/js/game/missoes/missao02.js
+2026-11-17 15:49:22 | INFO     | LOGIC-Watcher | Arquivo alterado: backup_refactor_20261117_150817/js/game/missoes/missao03.js
+2026-11-17 15:49:22 | INFO     | LOGIC-Watcher | Arquivo alterado: backup_refactor_20261117_150817/js/game/missoes/missao04.js
+2026-11-17 15:49:22 | INFO     | LOGIC-Watcher | Arquivo alterado: backup_refactor_20261117_150817/js/game/missoes/missao05.js
+2026-11-17 15:49:22 | INFO     | LOGIC-Watcher | Arquivo alterado: backup_refactor_20261117_150817/js/game/missoes/missao06.js
+2026-11-17 15:49:22 | INFO     | LOGIC-Watcher | Arquivo alterado: backup_refactor_20261117_150817/js/game/missoes/missao07.js
+2026-11-17 15:49:22 | INFO     | LOGIC-Watcher | Arquivo alterado: backup_refactor_20261117_150817/js/game/missoes/missao08.js
+2026-11-17 15:49:22 | INFO     | LOGIC-Watcher | Arquivo alterado: backup_refactor_20261117_150817/js/game/player.js
+2026-11-17 15:49:22 | INFO     | LOGIC-Watcher | Arquivo alterado: backup_refactor_20261117_150817/js/game/shop.js
+2026-11-17 15:49:22 | INFO     | LOGIC-Watcher | Arquivo alterado: backup_refactor_20261117_150817/js/game/state.js
+2026-11-17 15:49:22 | INFO     | LOGIC-Watcher | Arquivo alterado: backup_refactor_20261117_150817/js/game/stations.js
+2026-11-17 15:49:22 | INFO     | LOGIC-Watcher | Arquivo alterado: backup_refactor_20261117_150817/js/main.js
+2026-11-17 15:49:22 | INFO     | LOGIC-Watcher | Arquivo alterado: backup_refactor_20261117_150817/js/physics/world.js
+2026-11-17 15:49:22 | INFO     | LOGIC-Watcher | Arquivo alterado: backup_refactor_20261117_150817/js/ui/panel.js
+2026-11-17 15:49:22 | INFO     | LOGIC-Watcher | Arquivo alterado: backup_refactor_20261117_150817/js/ui/screens.js
+2026-11-17 15:49:22 | INFO     | LOGIC-Watcher | Arquivo alterado: backup_refactor_20261117_150817/js/world/lighting.js
+2026-11-17 15:49:22 | INFO     | LOGIC-Watcher | Arquivo alterado: backup_refactor_20261117_150817/js/world/scene.js
+2026-11-17 15:49:22 | INFO     | LOGIC-Watcher | Arquivo alterado: backup_refactor_20261117_150817/js/world/sky.js
+2026-11-17 15:49:22 | INFO     | LOGIC-Watcher | Arquivo alterado: backup_screens_20261117_151207/screens.js
+2026-11-17 15:49:22 | INFO     | LOGIC-Watcher | Hot Reload disparado.
+2026-11-17 15:49:22 | INFO     | Thread-716 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 15:49:22 | INFO     | LOGIC-Watcher | Arquivo alterado: backup_screens_20261117_151511/screens.js
+2026-11-17 15:49:22 | INFO     | LOGIC-Watcher | Arquivo alterado: backup_screens_20261117_151543/screens.js
+2026-11-17 15:49:22 | INFO     | LOGIC-Watcher | Hot Reload disparado.
+2026-11-17 15:49:22 | INFO     | Thread-744 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 15:51:10 | INFO     | LOGIC-Watcher | Arquivo alterado: js/ui/screens/loja.js
+2026-11-17 15:51:10 | INFO     | LOGIC-Watcher | Hot Reload disparado.
+2026-11-17 15:51:10 | INFO     | Thread-816 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 15:51:42 | INFO     | MainThread | LOGIC encerrado.
+2026-11-17 15:51:44 | INFO     | MainThread | LOGIC v2.0.0 iniciando.
+2026-11-17 15:51:44 | INFO     | MainThread | Modo de rede: LOCAL
+2026-11-17 15:51:44 | INFO     | LOGIC-HTTP | Servidor ativo em 127.0.0.1:8000
+2026-11-17 15:51:44 | INFO     | LOGIC-HTTP | Raiz pública: /home/linx/Área de Trabalho/op
+2026-11-17 15:51:44 | INFO     | LOGIC-HTTP | Logs persistentes: /home/linx/Área de Trabalho/op/logs
+2026-11-17 15:51:45 | INFO     | LOGIC-Watcher | Monitoramento de arquivos iniciado.
+2026-11-17 15:52:12 | INFO     | Thread-19 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 15:53:50 | INFO     | LOGIC-Watcher | Arquivo alterado: index.html
+2026-11-17 15:53:50 | INFO     | LOGIC-Watcher | Hot Reload disparado.
+2026-11-17 15:53:50 | INFO     | Thread-120 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 15:53:56 | INFO     | Thread-184 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 15:55:23 | INFO     | LOGIC-Watcher | Arquivo alterado: style.css
+2026-11-17 15:55:23 | INFO     | LOGIC-Watcher | Hot Reload disparado.
+2026-11-17 15:55:23 | INFO     | Thread-254 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 15:58:15 | INFO     | LOGIC-Watcher | Arquivo alterado: style.css
+2026-11-17 15:58:15 | INFO     | LOGIC-Watcher | Arquivo alterado: styles/style.css
+2026-11-17 15:58:15 | INFO     | LOGIC-Watcher | Hot Reload disparado.
+2026-11-17 15:58:15 | INFO     | Thread-327 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 15:58:29 | INFO     | LOGIC-Watcher | Arquivo alterado: styles/main.css
+2026-11-17 15:58:29 | INFO     | LOGIC-Watcher | Hot Reload disparado.
+2026-11-17 15:58:29 | INFO     | Thread-401 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 15:58:41 | INFO     | LOGIC-Watcher | Arquivo alterado: styles/main.css
+2026-11-17 15:58:41 | INFO     | LOGIC-Watcher | Hot Reload disparado.
+2026-11-17 15:58:41 | INFO     | Thread-471 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 15:59:01 | INFO     | LOGIC-Watcher | Arquivo alterado: styles/01-tokens.css
+2026-11-17 15:59:01 | INFO     | LOGIC-Watcher | Hot Reload disparado.
+2026-11-17 15:59:01 | INFO     | Thread-545 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 15:59:17 | INFO     | LOGIC-Watcher | Arquivo alterado: styles/01-tokens.css
+2026-11-17 15:59:17 | INFO     | LOGIC-Watcher | Hot Reload disparado.
+2026-11-17 15:59:17 | INFO     | Thread-615 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 15:59:25 | INFO     | LOGIC-Watcher | Arquivo alterado: styles/02-reset.css
+2026-11-17 15:59:25 | INFO     | LOGIC-Watcher | Hot Reload disparado.
+2026-11-17 15:59:25 | INFO     | Thread-689 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 15:59:32 | INFO     | LOGIC-Watcher | Arquivo alterado: styles/02-reset.css
+2026-11-17 15:59:32 | INFO     | LOGIC-Watcher | Hot Reload disparado.
+2026-11-17 15:59:33 | INFO     | Thread-760 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 15:59:43 | INFO     | LOGIC-Watcher | Arquivo alterado: styles/03-layout.css
+2026-11-17 15:59:43 | INFO     | LOGIC-Watcher | Hot Reload disparado.
+2026-11-17 15:59:43 | INFO     | Thread-831 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 15:59:53 | INFO     | LOGIC-Watcher | Arquivo alterado: styles/03-layout.css
+2026-11-17 15:59:53 | INFO     | LOGIC-Watcher | Hot Reload disparado.
+2026-11-17 15:59:54 | INFO     | Thread-905 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 16:00:05 | INFO     | LOGIC-Watcher | Arquivo alterado: styles/04-panel.css
+2026-11-17 16:00:05 | INFO     | LOGIC-Watcher | Hot Reload disparado.
+2026-11-17 16:00:05 | INFO     | Thread-976 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 16:00:08 | INFO     | LOGIC-Watcher | Arquivo alterado: styles/04-panel.css
+2026-11-17 16:00:08 | INFO     | LOGIC-Watcher | Hot Reload disparado.
+2026-11-17 16:00:09 | INFO     | Thread-1037 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 16:00:25 | INFO     | LOGIC-Watcher | Arquivo alterado: styles/05-hud.css
+2026-11-17 16:00:25 | INFO     | LOGIC-Watcher | Hot Reload disparado.
+2026-11-17 16:00:25 | INFO     | Thread-1108 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 16:00:50 | INFO     | LOGIC-Watcher | Arquivo alterado: styles/06-modals.css
+2026-11-17 16:00:50 | INFO     | LOGIC-Watcher | Hot Reload disparado.
+2026-11-17 16:00:50 | INFO     | Thread-1181 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 16:01:12 | INFO     | LOGIC-Watcher | Arquivo alterado: styles/07-screen.css
+2026-11-17 16:01:12 | INFO     | LOGIC-Watcher | Hot Reload disparado.
+2026-11-17 16:01:13 | INFO     | Thread-1234 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 16:01:30 | INFO     | LOGIC-Watcher | Arquivo alterado: styles/08-boot-welcome.css
+2026-11-17 16:01:30 | INFO     | LOGIC-Watcher | Hot Reload disparado.
+2026-11-17 16:01:30 | INFO     | Thread-1324 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 16:02:10 | INFO     | Thread-1356 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 16:02:44 | INFO     | LOGIC-Watcher | Arquivo alterado: styles/05-hud.css
+2026-11-17 16:02:44 | INFO     | LOGIC-Watcher | Hot Reload disparado.
+2026-11-17 16:02:44 | INFO     | Thread-1470 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 16:03:04 | INFO     | LOGIC-Watcher | Arquivo alterado: styles/06-modals.css
+2026-11-17 16:03:04 | INFO     | LOGIC-Watcher | Hot Reload disparado.
+2026-11-17 16:03:04 | INFO     | Thread-1540 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 16:03:19 | INFO     | LOGIC-Watcher | Arquivo alterado: styles/07-screen.css
+2026-11-17 16:03:19 | INFO     | LOGIC-Watcher | Hot Reload disparado.
+2026-11-17 16:03:19 | INFO     | Thread-1612 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 16:03:37 | INFO     | LOGIC-Watcher | Arquivo alterado: styles/08-boot-welcome.css
+2026-11-17 16:03:37 | INFO     | LOGIC-Watcher | Hot Reload disparado.
+2026-11-17 16:03:37 | INFO     | Thread-1664 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 16:06:18 | INFO     | Thread-1716 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 16:06:30 | INFO     | MainThread | LOGIC encerrado.
+2026-11-17 16:06:33 | INFO     | MainThread | LOGIC v2.0.0 iniciando.
+2026-11-17 16:06:33 | INFO     | MainThread | Modo de rede: LOCAL
+2026-11-17 16:06:33 | INFO     | LOGIC-HTTP | Servidor ativo em 127.0.0.1:8000
+2026-11-17 16:06:33 | INFO     | LOGIC-HTTP | Raiz pública: /home/linx/Área de Trabalho/op
+2026-11-17 16:06:33 | INFO     | LOGIC-HTTP | Logs persistentes: /home/linx/Área de Trabalho/op/logs
+2026-11-17 16:06:33 | INFO     | LOGIC-Watcher | Monitoramento de arquivos iniciado.
+2026-11-17 16:06:35 | INFO     | Thread-1 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 16:06:36 | INFO     | Thread-48 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 16:09:38 | INFO     | LOGIC-Watcher | Arquivo alterado: style.css
+2026-11-17 16:09:38 | INFO     | LOGIC-Watcher | Arquivo alterado: styles/style.css
+2026-11-17 16:09:38 | INFO     | LOGIC-Watcher | Hot Reload disparado.
+2026-11-17 16:09:39 | INFO     | Thread-115 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 16:12:59 | INFO     | LOGIC-Watcher | Arquivo alterado: styles/main.css
+2026-11-17 16:12:59 | INFO     | LOGIC-Watcher | Hot Reload disparado.
+2026-11-17 16:12:59 | INFO     | Thread-165 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 16:13:12 | INFO     | LOGIC-Watcher | Arquivo alterado: style.css
+2026-11-17 16:13:12 | INFO     | LOGIC-Watcher | Hot Reload disparado.
+2026-11-17 16:13:13 | INFO     | Thread-275 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 16:13:17 | INFO     | Thread-332 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 16:13:21 | INFO     | Thread-380 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 16:13:33 | INFO     | LOGIC-Watcher | Arquivo alterado: style.css
+2026-11-17 16:13:33 | INFO     | LOGIC-Watcher | Hot Reload disparado.
+2026-11-17 16:13:33 | INFO     | Thread-477 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 16:32:18 | INFO     | LOGIC-Watcher | Arquivo alterado: js/game/character-loader.js
+2026-11-17 16:32:18 | INFO     | LOGIC-Watcher | Hot Reload disparado.
+2026-11-17 16:32:18 | INFO     | Thread-545 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 16:32:31 | INFO     | LOGIC-Watcher | Arquivo alterado: js/game/character-loader.js
+2026-11-17 16:32:31 | INFO     | LOGIC-Watcher | Hot Reload disparado.
+2026-11-17 16:32:31 | INFO     | Thread-620 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 16:33:15 | INFO     | LOGIC-Watcher | Arquivo alterado: js/game/player.js
+2026-11-17 16:33:15 | INFO     | LOGIC-Watcher | Hot Reload disparado.
+2026-11-17 16:33:15 | INFO     | Thread-668 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 16:39:46 | INFO     | LOGIC-Watcher | Arquivo alterado: js/game/player.js
+2026-11-17 16:39:46 | INFO     | LOGIC-Watcher | Hot Reload disparado.
+2026-11-17 16:39:46 | INFO     | Thread-766 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 16:43:47 | INFO     | LOGIC-Watcher | Arquivo alterado: js/ui/screens/flow-screens.js
+2026-11-17 16:43:47 | INFO     | LOGIC-Watcher | Hot Reload disparado.
+2026-11-17 16:43:47 | INFO     | Thread-840 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 16:43:54 | INFO     | Thread-891 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 16:46:49 | INFO     | Thread-917 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 16:46:58 | INFO     | LOGIC-Watcher | Arquivo alterado: js/ui/screens/flow-screens.js
+2026-11-17 16:46:58 | INFO     | LOGIC-Watcher | Hot Reload disparado.
+2026-11-17 16:46:59 | INFO     | Thread-974 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 16:47:00 | INFO     | LOGIC-Watcher | Arquivo alterado: js/ui/screens/flow-screens.js
+2026-11-17 16:47:00 | INFO     | LOGIC-Watcher | Hot Reload disparado.
+2026-11-17 16:47:05 | INFO     | Thread-1024 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 16:55:10 | INFO     | LOGIC-Watcher | Arquivo alterado: js/main.js
+2026-11-17 16:55:10 | INFO     | LOGIC-Watcher | Hot Reload disparado.
+2026-11-17 16:55:10 | INFO     | Thread-1124 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 16:55:31 | INFO     | LOGIC-Watcher | Arquivo alterado: style.css
+2026-11-17 16:55:31 | INFO     | LOGIC-Watcher | Hot Reload disparado.
+2026-11-17 16:55:31 | INFO     | Thread-1178 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 16:55:56 | INFO     | LOGIC-Watcher | Arquivo alterado: js/ui/screens/flow-screens.js
+2026-11-17 16:55:56 | INFO     | LOGIC-Watcher | Hot Reload disparado.
+2026-11-17 16:55:56 | INFO     | Thread-1272 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 16:55:59 | INFO     | Thread-1324 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 17:02:08 | INFO     | LOGIC-Watcher | Arquivo alterado: js/ui/screens/flow-screens.js
+2026-11-17 17:02:08 | INFO     | LOGIC-Watcher | Hot Reload disparado.
+2026-11-17 17:02:08 | INFO     | Thread-1349 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 17:02:12 | INFO     | Thread-1401 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 17:06:24 | INFO     | LOGIC-Watcher | Arquivo alterado: js/game/flow.js
+2026-11-17 17:06:24 | INFO     | LOGIC-Watcher | Hot Reload disparado.
+2026-11-17 17:06:24 | INFO     | Thread-1453 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 17:06:53 | INFO     | Thread-1510 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 17:08:10 | INFO     | LOGIC-Watcher | Arquivo alterado: js/ui/screens/flow-screens.js
+2026-11-17 17:08:10 | INFO     | LOGIC-Watcher | Hot Reload disparado.
+2026-11-17 17:08:10 | INFO     | Thread-1577 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 17:08:18 | INFO     | Thread-1634 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 17:10:05 | INFO     | LOGIC-Watcher | Arquivo alterado: js/ui/screens/flow-screens.js
+2026-11-17 17:10:05 | INFO     | LOGIC-Watcher | Hot Reload disparado.
+2026-11-17 17:10:05 | INFO     | Thread-1705 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 17:10:09 | INFO     | LOGIC-Watcher | Arquivo alterado: js/game/flow.js
+2026-11-17 17:10:09 | INFO     | LOGIC-Watcher | Hot Reload disparado.
+2026-11-17 17:10:10 | INFO     | Thread-1779 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 17:10:15 | INFO     | Thread-1856 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1
+2026-11-17 17:10:27 | INFO     | LOGIC-Watcher | Arquivo alterado: js/main.js
+2026-11-17 17:10:27 | INFO     | LOGIC-Watcher | Hot Reload disparado.
+2026-11-17 17:10:27 | INFO     | Thread-1927 (process_request_thread) | Cliente Hot Reload conectado: 127.0.0.1

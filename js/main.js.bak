@@ -1,0 +1,582 @@
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+import { createScene, buildFloor } from './world/scene.js';
+import { carregarCeuHDRI } from './world/sky.js';
+import { setupLighting } from './world/lighting.js';
+
+import { Player } from './game/player.js';
+import { setupInput } from './game/input.js';
+import { criarEstacoes } from './game/stations.js';
+
+import { flow, FASE } from './game/flow.js';
+import { state, salvarProgresso, marcarDesafioConcluido } from './game/state.js';
+import { comprarPersonagem, equiparPersonagem } from './game/shop.js';
+import { renderScreens, abrirScanner, animarConclusao } from './ui/screens.js';
+
+// ✅ Avaliador específico da missão atual
+import { avaliarMissaoEspecifica, avaliarTabela, rodarTestes } from './game/evaluator.js';
+
+// ✅ Resolvedor de missão
+import { getMissao } from './game/missoes/index.js';
+
+
+
+// Tone mapping ajuda MUITO com HDRI solar
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.0;   // 0.8 ~ 1.2 dependendo do gosto
+
+// 1. Céu primeiro (assíncrono)
+carregarCeuHDRI(scene, renderer).catch(() => {
+  console.warn('[cenario] rodando sem HDRI, usando fallback');
+});
+
+
+
+// ======================================================
+// CENA
+// ======================================================
+const { scene, camera, renderer } = createScene();
+setupLighting(scene);
+buildFloor(scene);
+
+// ======================================================
+// INPUT
+// ======================================================
+const input = setupInput(renderer.domElement);
+
+// ======================================================
+// JOGADOR
+// ======================================================
+const player = new Player(camera, renderer.domElement, input);
+player.loadModel();
+scene.add(player.mesh);
+
+// ======================================================
+// COLISORES
+// ======================================================
+const colliders = [];
+
+// ======================================================
+// CONTROLES DE CÂMERA
+// ======================================================
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.target.copy(player.cameraTarget);
+controls.enablePan = false;
+controls.maxPolarAngle = Math.PI / 2 - 0.05;
+controls.minDistance = 2;
+controls.maxDistance = 15;
+controls.enableDamping = true;
+controls.dampingFactor = 0.08;
+
+// ======================================================
+// CONFIGURAÇÃO
+// ======================================================
+const CONFIG = {
+  playerRadius: 0.45,
+  playerHeight: 0.9,
+  interactionDistance: 10,
+  cameraFollowSpeed: 0.2
+};
+
+// ======================================================
+// ESTAÇÕES
+// ======================================================
+const stations = criarEstacoes(scene, colliders);
+const verificarDesbloqueios = stations.verificarDesbloqueios || (() => false);
+let stationFocada = null;
+
+// ======================================================
+// ESTADO INICIAL
+// ======================================================
+state.score = 0;
+
+// ======================================================
+// HUD DE AJUDA
+// ======================================================
+function setupHelpHUD() {
+  const btnHelp = document.getElementById('btn-help');
+  const helpModal = document.getElementById('help-modal');
+  const btnClose = document.getElementById('btn-close-help');
+
+  if (!btnHelp || !helpModal) return;
+
+  btnHelp.addEventListener('click', () => helpModal.style.display = 'block');
+  if (btnClose) btnClose.addEventListener('click', () => helpModal.style.display = 'none');
+}
+setupHelpHUD();
+
+// ======================================================
+// PAINEL RECOLHÍVEL
+// ======================================================
+function setupPanelToggle() {
+  const app = document.getElementById('app');
+  const btnToggle = document.getElementById('btn-toggle-panel');
+  const btnShow = document.getElementById('btn-show-panel');
+
+  if (!app || !btnToggle || !btnShow) return;
+
+  const collapsed = localStorage.getItem('panel-collapsed') === 'true';
+  if (collapsed) {
+    app.classList.add('panel-collapsed');
+    btnToggle.title = 'Mostrar painel';
+    btnToggle.textContent = '▶';
+  }
+
+  btnToggle.addEventListener('click', (e) => {
+    e.preventDefault(); e.stopPropagation();
+    app.classList.toggle('panel-collapsed');
+    const isCollapsed = app.classList.contains('panel-collapsed');
+    localStorage.setItem('panel-collapsed', String(isCollapsed));
+    btnToggle.title = isCollapsed ? 'Mostrar painel' : 'Ocultar painel';
+    btnToggle.textContent = isCollapsed ? '▶' : '◀';
+  });
+
+  btnShow.addEventListener('click', (e) => {
+    e.preventDefault(); e.stopPropagation();
+    app.classList.remove('panel-collapsed');
+    localStorage.setItem('panel-collapsed', 'false');
+    btnToggle.title = 'Ocultar painel';
+    btnToggle.textContent = '◀';
+  });
+}
+setupPanelToggle();
+
+// ======================================================
+// TOAST
+// ======================================================
+function mostrarToast(msg, duration = 2500) {
+  const el = document.getElementById('hint');
+  if (!el) return;
+  el.textContent = msg;
+  el.classList.remove('hidden');
+  clearTimeout(el._timer);
+  el._timer = setTimeout(() => el.classList.add('hidden'), duration);
+}
+
+// ======================================================
+// FUNÇÕES GLOBAIS (window.OZ)
+// ======================================================
+window.OZ = {
+  // ── NAVEGAÇÃO ──────────────────────────────────────
+  mostrarBoasVindas() { state.boasVindasVistas = false; flow.ir(FASE.MENU); renderScreens(); },
+  marcarBoasVindasVistas() { state.boasVindasVistas = true; salvarProgresso(); renderScreens(); },
+  entrarOficina() { state.boasVindasVistas = true; salvarProgresso(); flow.ir(FASE.WORKSHOP); renderScreens(); },
+  irPara(fase) { flow.ir(fase); renderScreens(); },
+  voltar() { flow.voltar(); renderScreens(); },
+
+  // ── INICIAR MISSÃO ─────────────────────────────────
+  iniciarMissao(id) {
+    const m = getMissao(id);
+    if (!m) { alert(`Desafio desconhecido: ${id}`); return; }
+
+    state.hipotese = null;
+    state.evidencias = [];
+    state.tabela = null;
+    state.tabelaResultado = null;
+    state.blocos = null;
+    state.testes = null;
+    state.avaliacao = null;
+    state.expressao = '';
+    state._ultimaRecompensa = null;
+    
+    state.conversaoHex = null;
+    state.conversaoBin = null;
+    state.algoritmoMontado = null;
+    state.fabrica = null;
+
+    // Inicializa estado da fábrica (Missão 03)
+    if (m.tipo === 'automacao') {
+      state.fabrica = {
+        pecasProcessadas: 0,
+        energia: m.fabrica.energiaInicial,
+        qualidade: m.fabrica.qualidadeInicial,
+        historico: [],
+        _segurando: false
+      };
+    }
+
+    state.procedimento = {};
+    (m.procedimentos || []).forEach(p => { state.procedimento[p.id] = false; });
+
+    state.desafioAtual = id;
+    flow.ir(FASE.RECEPCAO);
+    renderScreens();
+  },
+
+  voltarOficina() {
+    if (state.desafioAtual) {
+      if (typeof player !== 'undefined' && player.playOneShot) {
+        player.playOneShot('disappointed', 1500);
+      }
+      setTimeout(() => {
+        flow.ir(FASE.WORKSHOP);
+        state.hipotese = null; state.tabela = null; state.blocos = null;
+        state.testes = null; state.avaliacao = null; state.expressao = '';
+        state.desafioAtual = null; state.procedimento = {}; state._ultimaRecompensa = null;
+        state.fabrica = null;
+        salvarProgresso(); renderScreens();
+      }, 1500);
+      return;
+    }
+    flow.ir(FASE.WORKSHOP);
+    state.hipotese = null; state.desafioAtual = null; state.fabrica = null;
+    renderScreens();
+  },
+
+  // ── MISSÃO 02 (CONVERSÃO) ──────────────────────────
+  escolherHex(valor) { state.conversaoHex = valor; renderScreens(); },
+  escolherBin(valor) { state.conversaoBin = valor; renderScreens(); },
+
+  // NOVO — Chamado pelo botão "Testar este Código"
+  executarSimulacao() {
+    const alternativa = state.alternativaSelecionada;
+    if (!alternativa) return;
+
+    // Marca que está executando para desabilitar os botões
+    state.simulandoFabrica = true;
+    
+    // Inicializa a fábrica para a animação
+    state.fabrica = {
+      pecasProcessadas: 0,
+      energia: 100,
+      qualidade: 100,
+      historico: []
+    };
+    
+    renderScreens();
+
+    // Simula cada peça sendo processada
+    let count = 0;
+    const intervalo = setInterval(() => {
+      if (count >= 5) {
+        clearInterval(intervalo);
+        
+        // Quando terminar, chama o avaliador final para ver se acertou
+        state.simulandoFabrica = false;
+        window.OZ.concluirMissao();
+        return;
+      }
+      
+      // Se a alternativa estiver errada, a qualidade cai na simulação
+      const correta = alternativa === 'C';
+      if (state.fabrica) {
+        state.fabrica.pecasProcessadas = count + 1;
+        if (!correta) {
+          state.fabrica.qualidade -= 20;
+        }
+        renderScreens();
+      }
+      
+      count++;
+    }, 400); // 400 milissegundos por peça (rápido para não entediar)
+  },
+
+  // ── MISSÃO 03 (AUTOMAÇÃO) ──────────────────────────
+    // ── MISSÃO 03 (HÍBRIDA) ──────────────────────────────
+  selecionarAlternativa(id) {
+    state.alternativaSelecionada = id;
+    // Limpa avaliações anteriores se ele trocar a alternativa
+    state.avaliacao = null; 
+    renderScreens();
+  },
+
+  executarSimulacao() {
+    const alternativa = state.alternativaSelecionada;
+    if (!alternativa) return;
+
+    // Marca que está executando para desabilitar os botões
+    state.simulandoFabrica = true;
+    
+    // Inicializa a fábrica para a animação
+    state.fabrica = {
+      pecasProcessadas: 0,
+      energia: 100,
+      qualidade: 100,
+      historico: []
+    };
+    
+    renderScreens();
+
+    // Simula cada peça sendo processada (apenas visual)
+    let count = 0;
+    const intervalo = setInterval(() => {
+      if (count >= 5) {
+        clearInterval(intervalo);
+        
+        // Quando terminar, chama o avaliador final para ver se acertou
+        state.simulandoFabrica = false;
+        window.OZ.concluirMissao(); // Isso vai para o evaluator
+        return;
+      }
+      
+      // Se a alternativa estiver errada, a qualidade cai na simulação visual
+      const correta = alternativa === 'C';
+      if (state.fabrica) {
+        state.fabrica.pecasProcessadas = count + 1;
+        if (!correta) {
+          state.fabrica.qualidade -= 20;
+        }
+        renderScreens();
+      }
+      
+      count++;
+    }, 600); 
+  },
+
+  // ── MISSÃO 01 (LÓGICA) ─────────────────────────────
+  escolherHipotese(id) { state.hipotese = { id, label: id }; renderScreens(); },
+  
+  executarProcedimento(id) {
+    const m = getMissao(state.desafioAtual);
+    if (!m) return;
+    const p = (m.procedimentos || []).find(x => x.id === id);
+    if (!p) return;
+
+    if (id === 'reconectar_sensor') state.eletronico.freio = state.fisico.freio;
+    if (id === 'desligar_alarme') state.eletronico.alarme = false;
+    if (id === 'carregar_bateria') state.fisico.bateria = 12.6;
+
+    if (!state.procedimento) state.procedimento = {};
+    state.procedimento[id] = true;
+    abrirScanner(id);
+  },
+
+  marcarTabela(l, v) {
+    if (!state.tabela) state.tabela = [];
+    state.tabela[l] = v;
+    renderScreens();
+  },
+
+  validarTabela() {
+    const m = getMissao(state.desafioAtual);
+    state.tabelaResultado = avaliarTabela(state.tabela, m?.tabela);
+    renderScreens();
+  },
+
+  // ── BLOCOS DE LÓGICA (Missão 01) ───────────────────
+  addBloco(id, label) {
+    if (!state.blocos) state.blocos = [];
+    state.blocos.push({ id, label });
+    renderScreens();
+  },
+  removeBloco(i) {
+    if (state.blocos) state.blocos.splice(i, 1);
+    renderScreens();
+  },
+  limparBlocos() {
+    state.blocos = [];
+    renderScreens();
+  },
+  rodarTestes() {
+    const m = getMissao(state.desafioAtual);
+    state.expressao = 'return ' + (state.blocos || []).map(b => b.label).join(' ');
+    state.testes = rodarTestes(state.expressao, m?.tabela);
+    renderScreens();
+  },
+
+  // ── LOJA ───────────────────────────────────────────
+  abrirLoja() { flow.ir(FASE.LOJA); renderScreens(); },
+  fecharLoja() { flow.ir(FASE.WORKSHOP); renderScreens(); },
+  
+  comprarPersonagem(id) {
+    const r = comprarPersonagem(id);
+    if (!r.ok) alert(r.erro);
+    else alert(`✅ ${r.personagem.nome} comprado por R$ ${r.personagem.preco}!`);
+    renderScreens();
+  },
+  equiparPersonagem(id) {
+    const r = equiparPersonagem(id);
+    if (!r.ok) alert(r.erro);
+    else alert(`✅ ${r.personagem.nome} equipado!`);
+    renderScreens();
+  },
+
+  // ── CONCLUSÃO ──────────────────────────────────────
+  concluirMissao() {
+    // Garante que a expressao da missão 01 seja salva
+    if (state.desafioAtual === 'missao01') {
+      state.expressao = 'return ' + (state.blocos || []).map(b => b.label).join(' ');
+    }
+
+    state.avaliacao = avaliarMissaoEspecifica(state);
+    const aprovado = state.avaliacao.aprovado;
+
+    if (aprovado) {
+      const recompensa = state.avaliacao.recompensa || { xp: 100, dinheiro: 250 };
+      state.xp += recompensa.xp;
+      state.dinheiro += recompensa.dinheiro;
+      state.score += 100;
+      state._ultimaRecompensa = { ...recompensa };
+      
+      if (state.desafioAtual) marcarDesafioConcluido(state.desafioAtual);
+
+      const novos = verificarDesbloqueios();
+      if (novos && typeof mostrarToast === 'function') {
+        setTimeout(() => mostrarToast('🎉 Novo local desbloqueado na oficina!', 4000), 3500);
+      }
+      salvarProgresso();
+    } else {
+      state._ultimaRecompensa = { xp: 0, dinheiro: 0 };
+    }
+
+    // Reação do Ybot
+    if (typeof player !== 'undefined' && player.playOneShot) {
+      if (aprovado) {
+        player.playOneShot('excited', 2000);
+      } else {
+        const reacaoFalha = Math.random() < 0.5 ? 'disappointed' : 'kickGroin';
+        player.playOneShot(reacaoFalha, 1500); 
+      }
+    }
+
+    const delay = aprovado ? 100 : 1500; 
+    setTimeout(() => {
+      flow.ir(FASE.RESULTADO);
+      renderScreens();
+      if (aprovado) setTimeout(() => animarConclusao(), 100);
+    }, delay);
+  },
+
+  // ── RESET ──────────────────────────────────────────
+  resetProgresso() {
+    state.xp = 0;
+    state.dinheiro = 0;
+    state.score = 0;
+    state.desafiosConcluidos = [];
+    state.fabrica = null;
+    salvarProgresso();
+    renderScreens();
+  }
+};
+
+// ======================================================
+// FLUXO DE TELAS
+// ======================================================
+flow.onChange(() => renderScreens());
+renderScreens();
+
+// ======================================================
+// COLISÃO
+// ======================================================
+function colide(posicao) {
+  const centro = posicao.clone();
+  centro.y += CONFIG.playerHeight;
+  const esfera = new THREE.Sphere(centro, CONFIG.playerRadius);
+  return colliders.some(c => c.intersectsSphere(esfera));
+}
+
+function resolverColisao(posAnterior, posDesejada) {
+  const r = posAnterior.clone();
+  const tx = r.clone(); tx.x = posDesejada.x;
+  if (!colide(tx)) r.x = tx.x;
+  const tz = r.clone(); tz.z = posDesejada.z;
+  if (!colide(tz)) r.z = tz.z;
+  return r;
+}
+
+// ======================================================
+// INTERAÇÃO
+// ======================================================
+function atualizarInteracao() {
+  const prompt = document.getElementById('interaction-prompt');
+  const playerPos = player.mesh.position;
+
+  let maisProxima = null;
+  let menorDist = Infinity;
+
+  for (const st of stations) {
+    if (!st.userData?.id) continue;
+    if (!st.visible) continue;
+    const dx = st.position.x - playerPos.x;
+    const dz = st.position.z - playerPos.z;
+    const dist = Math.sqrt(dx * dx + dz * dz);
+    if (dist < CONFIG.interactionDistance && dist < menorDist) {
+      menorDist = dist;
+      maisProxima = st;
+    }
+  }
+
+  stationFocada = maisProxima;
+
+  if (prompt) {
+    if (stationFocada) {
+      prompt.style.display = 'block';
+      prompt.innerText = `[E] Iniciar: ${stationFocada.userData.title || 'Missão'}`;
+    } else {
+      prompt.style.display = 'none';
+    }
+  }
+}
+
+// ======================================================
+// TECLA E
+// ======================================================
+document.addEventListener('keydown', (e) => {
+  if (e.code !== 'KeyE' || e.repeat) return;
+  if (flow.fase !== FASE.WORKSHOP) return;
+  if (stationFocada && stationFocada.userData.id) {
+    const m = getMissao(stationFocada.userData.id);
+    if (!m) {
+      mostrarToast(`🏆 ${stationFocada.userData.subtitle}`, 3000);
+      return;
+    }
+    window.OZ.iniciarMissao(stationFocada.userData.id);
+  }
+});
+
+// ======================================================
+// FIX: evita "scroll to focus" no overlay
+// ======================================================
+document.addEventListener('focus', (e) => {
+  if (e.target.closest && e.target.closest('#screens-overlay')) {
+    e.target.scrollIntoView({ block: 'nearest', behavior: 'instant' });
+  }
+}, true);
+
+// ======================================================
+// DEBUG
+// ======================================================
+window.__debug = {
+  get THREE() { return THREE; },
+  get colliders() { return colliders; },
+  get player() { return player; },
+  get stations() { return stations; },
+  get scene() { return scene; },
+  get controls() { return controls; },
+  get camera() { return camera; },
+  get renderer() { return renderer; },
+  get flow() { return flow; },
+  get stationFocada() { return stationFocada; }
+};
+console.log('[main] __debug exposto ✅');
+
+// ======================================================
+// LOOP PRINCIPAL
+// ======================================================
+let last = performance.now();
+
+function animate() {
+  requestAnimationFrame(animate);
+  const now = performance.now();
+  const dt = Math.min((now - last) / 1000, 0.05);
+  last = now;
+
+  if (flow.fase === FASE.WORKSHOP) {
+    const displacement = player.computeDesiredDisplacement(dt);
+    const oldPos = player.mesh.position.clone();
+    const desired = oldPos.clone().add(displacement);
+    const finalPos = resolverColisao(oldPos, desired);
+    player.mesh.position.copy(finalPos);
+
+    player.applyRotation(dt);
+    player.syncCameraTarget();
+    controls.target.lerp(player.cameraTarget, CONFIG.cameraFollowSpeed);
+    controls.update();
+    atualizarInteracao();
+  }
+  renderer.render(scene, camera);
+}
+
+animate();

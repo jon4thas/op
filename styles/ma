@@ -1,0 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Orbitron:wght@500;600;700;800&display=swap');
+
+@import './01-tokens.css';
+@import './02-reset.css';
+@import './03-layout.css';
+@import './04-panel.css';
+@import './05-hud.css';
+@import './06-modals.css';
+@import './07-screen.css';
+@import './08-boot-welcome.css';
+@import './09-loja.css';   /* remova se mantiver injeção via JS */

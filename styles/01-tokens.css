@@ -1,0 +1,73 @@
+:root {
+  /* ───────────────────────────────────────
+     PALETA CYBER — fonte única de verdade
+     ─────────────────────────────────────── */
+  --cy-bg:      #050810;
+  --cy-panel:   #090f1b;
+  --cy-panel-2: #0d1726;
+  --cy-line:    rgba(90, 150, 190, .20);
+  --cy-text:    #d9e9f5;
+  --cy-muted:   #71869a;
+
+  --cy-cyan:    #00f0ff;
+  --cy-green:   #00ffa3;
+  --cy-purple:  #a879ff;
+  --cy-pink:    #ff3cac;
+  --cy-yellow:  #ffd166;
+
+  --cy-font:    'JetBrains Mono', Consolas, monospace;
+  --cy-display: 'Orbitron', 'JetBrains Mono', sans-serif;
+
+  /* ───────────────────────────────────────
+     ALIASES LEGADOS → CYBER
+     (mantêm as telas dinâmicas funcionando
+      com o mesmo nome que o JS já usa)
+     ─────────────────────────────────────── */
+  --bg:        var(--cy-bg);
+  --panel:     var(--cy-panel);
+  --panel-2:   var(--cy-panel-2);
+  --border:    var(--cy-line);
+  --border-2:  rgba(90, 150, 190, .35);
+
+  --accent:    var(--cy-cyan);
+  --accent-bg: rgba(0, 240, 255, .12);
+
+  --ok:        var(--cy-green);
+  --ok-bg:     rgba(0, 255, 163, .12);
+
+  --warn:      var(--cy-yellow);
+  --warn-bg:   rgba(255, 209, 102, .12);
+
+  --err:       #ff5577;
+  --err-bg:    rgba(255, 85, 119, .12);
+
+  --purple:    var(--cy-purple);
+  --text:      var(--cy-text);
+  --muted:     var(--cy-muted);
+  --muted-2:   #536b80;
+
+  /* ───────────────────────────────────────
+     SOMBRAS / RADII / TRANSIÇÃO / FONTS
+     ─────────────────────────────────────── */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, .3);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, .4);
+  --shadow-lg: 0 20px 60px rgba(0, 0, 0, .6);
+
+  --radius-sm: 4px;
+  --radius:    6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+
+  --transition: all .18s cubic-bezier(.4, 0, .2, 1);
+
+  --font-sans: 'JetBrains Mono', Consolas, monospace;
+  --font-mono: 'JetBrains Mono', Consolas, 'Courier New', monospace;
+
+  /* ───────────────────────────────────────
+     PALETA DA LOJA HACKER (compartilhada
+     entre o overlay dinâmico e o modal)
+     ─────────────────────────────────────── */
+  --loja-bg:    #0a1a10;
+  --loja-text:  #d4ffe0;
+  --loja-green: #00ff88;
+}

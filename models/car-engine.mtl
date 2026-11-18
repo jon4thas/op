@@ -1,0 +1,20 @@
+# File produced by Open Asset Import Library (http://www.assimp.sf.net)
+# (assimp v5.3.0)
+
+newmtl car-engine_body_pbr
+Kd 0.800000012 0.800000012 0.800000012
+Ks 0.800000012 0.800000012 0.800000012
+Ke 0 0 0
+d 1
+Ns 250
+illum 2
+map_Kd *0
+bump *2
+map_bump *2
+
+newmtl $Material_1
+Kd 1 1 1
+Ke 0 0 0
+d 1
+illum 1
+

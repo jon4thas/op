@@ -1,0 +1,966 @@
+// ======================================================
+// screens.js — Telas dinâmicas por missão
+// ======================================================
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+import { state } from '../game/state.js';
+import { flow, FASE } from '../game/flow.js';
+import { BLOCOS_DISPONIVEIS } from '../game/evaluator.js';
+import { getMissao } from '../game/missoes/index.js';
+
+import {
+  listarPersonagens,
+  listarItensLoja,
+  CATEGORIAS_LOJA
+} from '../game/shop.js';
+
+// ======================================================
+// HELPERS
+// ======================================================
+const overlay = () => document.getElementById('screens-overlay');
+
+const setHTML = (id, html) => {
+  const el = document.getElementById(id);
+  if (el) el.innerHTML = html;
+};
+
+const setText = (id, txt) => {
+  const el = document.getElementById(id);
+  if (el) el.textContent = txt;
+};
+
+const setDisplay = (id, display) => {
+  const el = document.getElementById(id);
+  if (el) el.style.display = display;
+};
+
+// ======================================================
+// ESTADO DA LOJA
+// ======================================================
+let categoriaLojaAtiva = 'todos';
+let itemLojaSelecionado = 'motor';
+let lojaLoadToken = 0;
+
+let lojaViewer = {
+  scene: null, camera: null, renderer: null, controls: null, loader: null, model: null, animationId: null, resizeObserver: null
+};
+
+// ======================================================
+// RENDER PRINCIPAL
+// ======================================================
+function render() {
+  destruirViewerLoja();
+  setHTML('screens-overlay', '');
+
+  const fase = flow.fase;
+
+  setDisplay('workshop-hud', 'none');
+  setDisplay('btn-help', 'none');
+  setDisplay('shop-hud', 'none');
+
+  // ── WORKSHOP ──────────────────────────────────────
+  if (fase === FASE.WORKSHOP) {
+    setDisplay('workshop-hud', 'block');
+    setDisplay('btn-help', 'block');
+    setDisplay('shop-hud', 'block');
+
+    setText('panel-title', 'Oficina Central');
+    setText('panel-sub', 'Exploração');
+
+    const desafios = [
+      { id: 'missao01', titulo: 'Motor', desc: 'Lógica e Diagnóstico' },
+      { id: 'missao02', titulo: 'Sistema Elétrico', desc: 'Sistemas de Numeração' },
+      { id: 'missao03', titulo: 'Automação', desc: 'Algoritmos' }
+    ];
+
+    setHTML('panel-content', `
+      <h3 style="font-size:13px; color:var(--accent); margin:16px 0 8px; text-transform:uppercase; letter-spacing:1px;">
+        Desafios
+      </h3>
+
+      ${desafios.map(d => {
+        const done = state.desafiosConcluidos.includes(d.id);
+        return `
+          <div style="display:flex; align-items:center; gap:10px; padding:8px 0; border-bottom:1px solid var(--border);">
+            <div style="width:22px; height:22px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; flex-shrink:0; background:${done ? 'var(--ok)' : 'transparent'}; border:1.5px solid ${done ? 'var(--ok)' : 'var(--border)'}; color:${done ? '#fff' : 'var(--muted)'};">
+              ${done ? '✓' : ''}
+            </div>
+            <div style="flex:1;">
+              <div style="font-size:14px; color:${done ? 'var(--ok)' : 'var(--text)'}; font-weight:600;">
+                ${d.titulo}
+              </div>
+              <div style="font-size:12px; color:var(--muted);">
+                ${d.desc}
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('')}
+
+      <hr style="margin:16px 0;border-color:var(--border);">
+
+      <div style="display:flex;justify-content:space-between;padding:6px 0;">
+        <span style="color:var(--muted);font-size:14px;">💰 Dinheiro</span>
+        <strong style="color:var(--ok);font-size:16px;">R$ ${state.dinheiro}</strong>
+      </div>
+      <div style="display:flex;justify-content:space-between;padding:6px 0;">
+        <span style="color:var(--muted);font-size:14px;">⭐ XP</span>
+        <strong style="color:var(--accent);font-size:16px;">${state.xp} XP</strong>
+      </div>
+      <div style="display:flex;justify-content:space-between;padding:6px 0;">
+        <span style="color:var(--muted);font-size:14px;">🏆 Desafios</span>
+        <strong style="color:var(--warn);font-size:16px;">${state.desafiosConcluidos.length}/3</strong>
+      </div>
+    `);
+    return;
+  }
+
+  // ── MENU ──────────────────────────────────────────
+  if (fase === FASE.MENU) {
+    if (!state.boasVindasVistas) {
+      overlay().innerHTML = renderBoasVindas();
+    } else {
+      overlay().innerHTML = renderMenu();
+    }
+  }
+
+  // ── TELAS DE MISSÃO ───────────────────────────────
+  else {
+    setDisplay('btn-help', 'block');
+
+    if (fase === FASE.RECEPCAO) overlay().innerHTML = renderRecepcao();
+    else if (fase === FASE.DESAFIO) overlay().innerHTML = renderDesafio();
+    else if (fase === FASE.RESULTADO) overlay().innerHTML = renderResultado();
+    else if (fase === FASE.LOJA) {
+      overlay().innerHTML = renderLoja();
+      iniciarViewerLoja();
+    }
+  }
+
+  atualizarPainelLateral();
+}
+
+// ======================================================
+// MENUS (Mantidos do seu arquivo original)
+// ======================================================
+
+function renderBoasVindas() {
+  return `
+    <div class="screen wide boot-screen">
+
+      <div class="boot-topbar">
+        <div class="boot-brand">
+          <span class="boot-brand-icon">◈</span>
+          MUNDO LÓGICO
+          <span class="boot-version">SYS v2.6.0</span>
+        </div>
+
+        <div class="boot-status">
+          <span class="boot-status-dot"></span>
+          USER INITIALIZATION
+        </div>
+      </div>
+
+      <div class="screen-body boot-welcome-body">
+
+        <div class="welcome-hero">
+
+          <div class="boot-kicker">
+            <span></span> ACCESS GRANTED / NEW OPERATOR
+          </div>
+
+          <div class="welcome-hero-title">
+            <div class="welcome-symbol">◈</div>
+            <h1>
+              BEM-VINDO<span>.</span><br>
+              <strong>OPERADOR<span class="boot-cursor">_</span></strong>
+            </h1>
+          </div>
+
+          <p class="boot-description">
+            Seu próximo universo começa com uma linha de código.
+            <br>
+            <span>Explore. Experimente. Construa possibilidades.</span>
+          </p>
+
+          <div class="welcome-terminal">
+            <div class="boot-terminal-header">
+              <div class="boot-terminal-dots">
+                <i></i><i></i><i></i>
+              </div>
+              <span>root@mundologico:~/welcome</span>
+              <span class="boot-terminal-live">CONNECTED</span>
+            </div>
+
+            <div class="welcome-terminal-content">
+              <div class="welcome-terminal-line">
+                <span class="log-pink">01 //</span>
+                <span>Você acaba de entrar em um laboratório de ideias.</span>
+              </div>
+
+              <div class="welcome-terminal-line">
+                <span class="log-blue">02 //</span>
+                <span>Investigue problemas e desenvolva soluções.</span>
+              </div>
+
+              <div class="welcome-terminal-line">
+                <span class="log-pink">03 //</span>
+                <span>Transforme lógica em sistemas funcionais.</span>
+              </div>
+
+              <div class="welcome-terminal-line">
+                <span class="log-blue">04 //</span>
+                <span>Conquiste experiência e desbloqueie recompensas.</span>
+              </div>
+
+              <div class="welcome-terminal-command">
+                <span>operator@mundologico:~$</span>
+                <strong>start_learning<span class="boot-cursor">_</span></strong>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="welcome-content">
+
+          <div class="welcome-section-label">
+            <span>01</span> / SUA MISSÃO
+          </div>
+
+          <h2>O conhecimento é sua ferramenta.</h2>
+
+          <p>
+            Aqui você não aprende apenas observando.
+            Você experimenta, erra, corrige e constrói.
+            Cada desafio representa um novo problema para resolver.
+          </p>
+
+          <div class="welcome-feature">
+            <div class="welcome-feature-icon blue">⌘</div>
+            <div>
+              <strong>RESOLVA DESAFIOS</strong>
+              <span>Investigue situações e desenvolva soluções lógicas.</span>
+            </div>
+          </div>
+
+          <div class="welcome-feature">
+            <div class="welcome-feature-icon pink">⌁</div>
+            <div>
+              <strong>EVOLUA SEU SISTEMA</strong>
+              <span>Ganhe XP, dinheiro e desbloqueie personagens.</span>
+            </div>
+          </div>
+
+          <div class="welcome-feature">
+            <div class="welcome-feature-icon blue">◈</div>
+            <div>
+              <strong>EXPLORE POSSIBILIDADES</strong>
+              <span>Programe, experimente e descubra novas tecnologias.</span>
+            </div>
+          </div>
+
+          <div class="welcome-progress">
+            <div class="welcome-section-label">
+              <span>02</span> / SEU PROGRESSO
+            </div>
+
+            <div class="welcome-stats">
+              <div>
+                <span>WALLET</span>
+                <strong>R$ ${state.dinheiro}</strong>
+              </div>
+              <div>
+                <span>EXPERIENCE</span>
+                <strong>${state.xp} XP</strong>
+              </div>
+              <div>
+                <span>MISSIONS</span>
+                <strong>${state.desafiosConcluidos.length}/3</strong>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="boot-footer welcome-footer">
+        <button
+          class="welcome-reset"
+          onclick="window.OZ.resetProgresso()"
+        >
+          <span>⚠</span> RESETAR PROGRESSO
+        </button>
+
+        <span>LEARN / CODE / EXPLORE</span>
+
+        <button
+          class="boot-enter"
+          onclick="window.OZ.entrarOficina()"
+        >
+          ENTRAR NA OFICINA <span>→</span>
+        </button>
+      </div>
+
+    </div>
+  `;
+}
+
+
+function renderMenu() {
+  return `
+    <div class="screen wide boot-screen">
+      <div class="boot-topbar">
+        <div class="boot-brand"><span class="boot-brand-icon">◈</span> MUNDO LÓGICO<span class="boot-version">SYS v2.6.0</span></div>
+        <div class="boot-status"><span class="boot-status-dot"></span> SYSTEM ONLINE</div>
+      </div>
+      <div class="screen-body boot-body">
+        <div class="boot-main">
+          <div class="boot-kicker"><span></span> INITIALIZING ENVIRONMENT</div>
+          <h1 class="boot-title">THINK<span>.</span><br>BUILD<span>.</span><br><strong>HACK<span>_</span></strong></h1>
+          <p class="boot-description">Um universo de lógica, tecnologia e possibilidades.<br><span>O próximo comando está em suas mãos.</span></p>
+          <div class="boot-terminal">
+            <div class="boot-terminal-header"><div class="boot-terminal-dots"><i></i><i></i><i></i></div><span>root@mundologico:~</span><span class="boot-terminal-live">LIVE</span></div>
+            <div class="boot-terminal-content">
+              <div class="boot-ascii"><pre>
+       <span class="ascii-blue">    .------.</span>
+       <span class="ascii-blue">   / .----. \\</span>
+       <span class="ascii-pink">  | |  ◈  | |</span>
+       <span class="ascii-pink">  | |     | |</span>
+       <span class="ascii-blue">   \\ '----' /</span>
+       <span class="ascii-blue">    '------'</span>
+                </pre></div>
+              <div class="boot-logs">
+                <div><span class="log-ok">[ OK ]</span> Kernel initialized</div>
+                <div><span class="log-ok">[ OK ]</span> Logic engine loaded</div>
+                <div><span class="log-blue">[ SYS ]</span> JavaScript environment ready</div>
+                <div><span class="log-pink">[ SEC ]</span> Sandbox protocol active</div>
+                <div><span class="log-blue">[ XP ]</span> ${state.xp} experience points detected</div>
+                <div><span class="log-pink">[ USER ]</span> Welcome, operator<span class="boot-cursor">_</span></div>
+              </div>
+            </div>
+            <div class="boot-progress">
+              <div class="boot-progress-info"><span>INITIALIZATION</span><span class="boot-progress-percent">100%</span></div>
+              <div class="boot-progress-track"><div class="boot-progress-fill"></div></div>
+            </div>
+          </div>
+          <div class="boot-actions">
+            <button class="boot-enter" onclick="window.OZ.entrarOficina()"><span>▶</span> INICIAR SISTEMA</button>
+            <button class="boot-welcome" onclick="window.OZ.mostrarBoasVindas()">DOCUMENTAÇÃO</button>
+          </div>
+        </div>
+        <div class="boot-aside">
+          <div class="boot-aside-label">ASCII / ART</div>
+          <pre class="boot-big-ascii">
+<span class="ascii-blue">      _   _</span>
+<span class="ascii-blue">     | | | |</span>
+<span class="ascii-pink">     | |_| |</span>
+<span class="ascii-pink">      \\__, |</span>
+<span class="ascii-blue">       __/ |</span>
+<span class="ascii-blue">      |___/</span>
+<span class="ascii-pink">   L O G I C</span>
+<span class="ascii-blue">   IS POWER</span>
+          </pre>
+          <div class="boot-aside-line"></div>
+          <div class="boot-stat"><span>WALLET</span><strong>R$ ${state.dinheiro}</strong></div>
+          <div class="boot-stat"><span>EXPERIENCE</span><strong>${state.xp} XP</strong></div>
+          <div class="boot-stat"><span>MISSIONS</span><strong>${state.desafiosConcluidos.length}/3</strong></div>
+          <div class="boot-aside-footer"><span class="boot-status-dot"></span> CONNECTION ESTABLISHED</div>
+        </div>
+      </div>
+      <div class="boot-footer"><span>© MUNDO LÓGICO · 2026</span><span>LEARN / CODE / EXPLORE</span><span>BASED ON JAVASCRIPT</span></div>
+    </div>
+  `;
+}
+
+function renderRecepcao() {
+  const m = getMissao(state.desafioAtual);
+  if (!m) return `<div class="screen"><div class="screen-body">Missão não encontrada.</div></div>`;
+
+  return `
+    <div class="screen">
+      <div class="screen-header">
+        <h1>${m.titulo}</h1>
+        <span class="badge">${m.badge || 'Chamado'}</span>
+      </div>
+      <div class="screen-body">
+        <h2>Cliente relata</h2>
+        <p>"${m.cliente}"</p>
+        <h2>Objetivo</h2>
+        <p>${m.objetivo}</p>
+      </div>
+      <div class="screen-footer">
+        <button class="btn" onclick="window.OZ.voltarOficina()">Abandonar</button>
+        <button class="btn primary" onclick="window.OZ.irPara('desafio')">Iniciar Desafio →</button>
+      </div>
+    </div>
+  `;
+}
+
+// ======================================================
+// ROTEADOR DE DESAFIOS (CORRIGIDO)
+// ======================================================
+// ======================================================
+// ROTEADOR DE DESAFIOS
+// ======================================================
+function renderDesafio() {
+  const m = getMissao(state.desafioAtual);
+  if (!m) return `<div class="screen"><div class="screen-body">Missão não encontrada.</div></div>`;
+
+  if (m.tipo === 'conversao') return renderDesafioConversao(m);
+  if (m.tipo === 'enem') return renderDesafioEnem(m); // <--- NOVO
+  
+  // Padrão: Lógica (Missão 01)
+  return renderDesafioLogica(m, state.blocos || [], state.testes, state.procedimento || {});
+}
+
+// ── UI: Missão 03 (Híbrida ENEM) ──────────────────────────
+function renderDesafioEnem(m) {
+  const alternativaSelecionada = state.alternativaSelecionada || null;
+  const executando = state.simulandoFabrica === true;
+
+  const alternativasHTML = m.questao.alternativas.map(alt => {
+    const selecionada = alternativaSelecionada === alt.id;
+    const correta = alt.correta;
+    
+    let bg = 'var(--bg)';
+    let border = 'var(--border)';
+
+    if (selecionada) {
+      bg = 'var(--accent-bg)';
+      border = 'var(--accent)';
+      
+      // Se o jogador já testou essa alternativa e o avaliador retornou algo
+      if (state.avaliacao) {
+        bg = correta ? 'var(--ok-bg)' : 'var(--err-bg)';
+        border = correta ? 'var(--ok)' : 'var(--err)';
+      }
+    }
+
+    return `
+      <div 
+        onclick="window.OZ.selecionarAlternativa('${alt.id}')" 
+        style="
+          display: flex; align-items: flex-start; gap: 15px;
+          padding: 16px; margin-bottom: 12px;
+          background: ${bg}; border: 1px solid ${border};
+          border-radius: 8px; cursor: pointer; 
+          transition: all 0.2s;
+          ${executando ? 'pointer-events:none; opacity:0.7;' : ''}
+        "
+      >
+        <div style="
+          width: 30px; height: 30px; border-radius: 50%; flex-shrink: 0;
+          display: flex; align-items: center; justify-content: center;
+          background: ${border === 'var(--border)' ? 'transparent' : border};
+          color: white; font-weight: bold; font-size: 14px;
+          border: 1px solid ${border};
+        ">
+          ${alt.id}
+        </div>
+        <div style="flex: 1;">
+          <div style="font-family: monospace; font-size: 15px; margin-bottom: 6px; color: var(--text);">
+            ${alt.texto}
+          </div>
+          
+          ${(selecionada && state.avaliacao) ? `
+            <div style="
+              margin-top: 10px; padding: 10px; 
+              border-radius: 6px; font-size: 13px;
+              background: rgba(0,0,0,0.2);
+              color: ${correta ? 'var(--ok)' : 'var(--err)'};
+            ">
+              <strong>Feedback:</strong> ${alt.feedback}
+            </div>
+          ` : ''}
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  return `
+    <div class="screen wide">
+      <div class="screen-header">
+        <h1>Questão 03: O Protocolo</h1>
+        <span class="badge">${m.badge} · Nível ENEM</span>
+      </div>
+      
+      <div class="screen-body" style="max-height:75vh; overflow-y:auto;">
+        
+        <div style="background:var(--panel); padding: 20px; border-radius: 8px; border-left: 4px solid var(--accent); margin-bottom: 24px;">
+          <h3 style="margin-top: 0; color: var(--accent);">📋 Contexto</h3>
+          <p style="margin-bottom: 0;">${m.cliente}</p>
+        </div>
+
+        <h2>${m.questao.enunciado}</h2>
+        
+        <div style="margin-top: 16px;">
+          ${alternativasHTML}
+        </div>
+
+        ${executando ? `
+          <div style="text-align: center; margin-top: 20px; padding: 20px;">
+            <h3 style="color: var(--warn);">⚙️ Robô executando o código...</h3>
+            <div style="font-family: monospace; margin-top: 10px;">
+              ${state.fabrica?.pecasProcessadas || 0} / ${m.fabrica.totalPecas} peças processadas
+            </div>
+            <div class="boot-progress-track" style="margin-top: 10px; height: 6px;">
+              <div class="boot-progress-fill" style="width: ${((state.fabrica?.pecasProcessadas || 0) / m.fabrica.totalPecas) * 100}%"></div>
+            </div>
+          </div>
+        ` : ''}
+
+      </div>
+
+      <div class="screen-footer">
+        <button class="btn" onclick="window.OZ.voltarOficina()">Sair</button>
+        
+        <button 
+          class="btn primary" 
+          onclick="window.OZ.executarSimulacao()"
+          ${!alternativaSelecionada || executando ? 'disabled' : ''}
+        >
+          ${executando ? 'Executando...' : '▶ Testar este Código'}
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+// ── UI: Missão 01 (Lógica) ─────────────────────────────
+function renderDesafioLogica(m, blocos, t, proc) {
+  const tabelaMissao = m.tabela || [];
+  const linhas = tabelaMissao.map((l, i) => {
+    const marcado = state.tabela?.[i];
+    return `
+      <tr>
+        <td>${i + 1}</td>
+        <td>${l.batOK ? '12V' : '11V'}</td>
+        <td>${l.freio ? '1' : '0'}</td>
+        <td>${l.marcha}</td>
+        <td>${l.alarme ? '1' : '0'}</td>
+        <td>
+          <button class="tt-btn ${marcado === true ? 'sel-true' : ''}" onclick="window.OZ.marcarTabela(${i}, true)">1</button>
+          <button class="tt-btn ${marcado === false ? 'sel-false' : ''}" onclick="window.OZ.marcarTabela(${i}, false)">0</button>
+        </td>
+      </tr>
+    `;
+  }).join('');
+
+  const hipotesesHTML = (m.hipoteses || []).map(h => `
+    <button class="hypothesis ${state.hipotese?.id === h.id ? 'selected' : ''}" onclick="window.OZ.escolherHipotese('${h.id}')">${h.label}</button>
+  `).join('');
+
+  const procedimentosHTML = (m.procedimentos || []).map(p => `
+    <button class="btn" onclick="window.OZ.executarProcedimento('${p.id}')" ${proc[p.id] ? 'disabled' : ''}>
+      ${proc[p.id] ? '✓ ' : ''} ${p.label}
+    </button>
+  `).join('');
+
+  const hipoteseOK = state.hipotese?.id === m.hipoteseCorreta;
+  const correcoesOK = (m.procedimentos || []).every(p => !!proc[p.id]);
+  const testesOK = t && t.total > 0 && t.pass === t.total;
+  const tudoOk = hipoteseOK && correcoesOK && testesOK;
+
+  return `
+    <div class="screen wide">
+      <div class="screen-header">
+        <h1>Desafio</h1>
+        <span class="badge">${m.badge} · ${m.titulo}</span>
+      </div>
+      <div class="screen-body" style="max-height:75vh;overflow-y:auto;">
+        <h2>1. Qual é sua hipótese?</h2>
+        <div style="margin-bottom:24px;">${hipotesesHTML}</div>
+        
+        <h2>2. Procedimentos de reparo</h2>
+        <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:24px;">${procedimentosHTML}</div>
+
+        <h2>3. Monte a expressão lógica</h2>
+        <div class="blocos">
+          ${BLOCOS_DISPONIVEIS.map((b, i) => `<button class="bloco" data-bloco-index="${i}">${b.label}</button>`).join('')}
+        </div>
+        <div class="expr-builder">
+          ${blocos.map((b, i) => `<span class="chip">${b.label} <button class="chip-x" data-remove-index="${i}">×</button></span>`).join('')}
+        </div>
+        <button class="btn" style="margin-top:8px" onclick="window.OZ.limparBlocos()">Limpar</button>
+
+        <h2 style="margin-top:24px;">4. Testar expressão</h2>
+        <button class="btn accent" onclick="window.OZ.rodarTestes()">Executar testes</button>
+        ${t ? `
+          <div style="margin-top:12px; padding:16px; background:${t.pass === t.total ? 'var(--ok-bg)' : 'var(--err-bg)'}; border-radius:8px; text-align:center; border:1px solid ${t.pass === t.total ? 'var(--ok)' : 'var(--err)'};">
+            <strong style="font-size:20px;">${t.pass}/${t.total} testes passaram</strong> ${t.pass === t.total ? ' ✅' : ' ❌'}
+          </div>
+        ` : ''}
+
+        <h2 style="margin-top:24px;">5. Tabela-verdade (opcional)</h2>
+        <table class="tt">
+          <thead><tr><th>#</th><th>Bateria</th><th>Freio</th><th>Marcha</th><th>Alarme</th><th>Partida (0/1)</th></tr></thead>
+          <tbody>${linhas}</tbody>
+        </table>
+        <button class="btn accent" style="margin-top:12px" onclick="window.OZ.validarTabela()">Validar Tabela</button>
+      </div>
+      <div class="screen-footer">
+        <button class="btn" onclick="window.OZ.voltarOficina()">← Sair</button>
+        <button class="btn primary" onclick="window.OZ.concluirMissao()" ${!tudoOk ? 'disabled' : ''}>Concluir Missão →</button>
+      </div>
+    </div>
+  `;
+}
+
+// ── UI: Missão 02 (Conversão Hex/Bin) ──────────────────
+function renderDesafioConversao(m) {
+  const conf = m.conversao;
+  return `
+    <div class="screen wide">
+      <div class="screen-header">
+        <h1>Sistemas de Numeração</h1>
+        <span class="badge">${m.badge}</span>
+      </div>
+      <div class="screen-body">
+        <h2>O problema</h2>
+        <p>${m.cliente}</p>
+        
+        <div style="background:var(--bg); padding:20px; border-radius:8px; margin:24px 0; border:1px solid var(--border);">
+          <h3>Painel de Tensão (Decimal)</h3>
+          <p>Valor atual: <strong style="font-size:24px; color:var(--accent);">${conf.decimalBase}V</strong></p>
+        </div>
+
+        <h2>1. Converta para Hexadecimal</h2>
+        <div style="display:flex; gap:10px; margin-bottom:24px;">
+          ${conf.hexOpcoes.map(hex => `
+            <button class="btn ${state.conversaoHex === hex ? 'primary' : ''}" onclick="window.OZ.escolherHex('${hex}')">${hex}</button>
+          `).join('')}
+        </div>
+
+        <h2>2. Converta para Binário</h2>
+        <div style="display:flex; gap:10px;">
+          ${conf.binOpcoes.map(bin => `
+            <button class="btn ${state.conversaoBin === bin ? 'primary' : ''}" onclick="window.OZ.escolherBin('${bin}')">${bin}</button>
+          `).join('')}
+        </div>
+      </div>
+      <div class="screen-footer">
+        <button class="btn" onclick="window.OZ.voltarOficina()">Sair</button>
+        <button class="btn primary" onclick="window.OZ.concluirMissao()" ${(!state.conversaoHex || !state.conversaoBin) ? 'disabled' : ''}>Enviar Resposta →</button>
+      </div>
+    </div>
+  `;
+}
+
+// ── UI: Missão 03 (Automação) ──────────────────────────
+function renderDesafioAutomacao(m) {
+  const alternativaSelecionada = state.alternativaSelecionada || null;
+  const executando = state.simulandoFabrica === true;
+
+  // Renderiza as alternativas
+  const alternativasHTML = m.questao.alternativas.map(alt => {
+    const selecionada = alternativaSelecionada === alt.id;
+    const correta = alt.correta;
+    
+    // Estilo base
+    let bg = 'var(--bg)';
+    let border = 'var(--border)';
+    let icon = '○';
+
+    if (selecionada) {
+      bg = 'var(--accent-bg)';
+      border = 'var(--accent)';
+      icon = '◉';
+      
+      // Se já simulou e acertou/errou, mostra a cor
+      if (state.avaliacao) {
+        bg = correta ? 'var(--ok-bg)' : 'var(--err-bg)';
+        border = correta ? 'var(--ok)' : 'var(--err)';
+        icon = correta ? '✅' : '❌';
+      }
+    }
+
+    return `
+      <div 
+        onclick="window.OZ.selecionarAlternativa('${alt.id}')" 
+        style="
+          display: flex; align-items: flex-start; gap: 15px;
+          padding: 16px; margin-bottom: 12px;
+          background: ${bg}; border: 1px solid ${border};
+          border-radius: 8px; cursor: pointer; 
+          transition: all 0.2s;
+          ${executando ? 'pointer-events:none; opacity:0.7;' : ''}
+        "
+      >
+        <div style="
+          width: 30px; height: 30px; border-radius: 50%;
+          display: flex; align-items: center; justify-content: center;
+          background: ${border === 'var(--border)' ? 'transparent' : border};
+          color: white; font-weight: bold; font-size: 14px;
+        ">
+          ${alt.id}
+        </div>
+        <div style="flex: 1;">
+          <div style="font-family: monospace; font-size: 15px; margin-bottom: 6px; color: var(--text);">
+            ${alt.texto}
+          </div>
+          
+          ${(selecionada && state.avaliacao) ? `
+            <div style="
+              margin-top: 10px; padding: 10px; 
+              border-radius: 6px; font-size: 13px;
+              background: rgba(0,0,0,0.2);
+              color: ${correta ? 'var(--ok)' : 'var(--err)'};
+            ">
+              <strong>Feedback:</strong> ${alt.feedback}
+            </div>
+          ` : ''}
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  return `
+    <div class="screen wide">
+      <div class="screen-header">
+        <h1>Questão 03: O Protocolo</h1>
+        <span class="badge">${m.badge} · Nível ENEM</span>
+      </div>
+      
+      <div class="screen-body" style="max-height:75vh; overflow-y:auto;">
+        
+        <div style="background:var(--panel); padding: 20px; border-radius: 8px; border-left: 4px solid var(--accent); margin-bottom: 24px;">
+          <h3 style="margin-top: 0; color: var(--accent);">📋 Contexto</h3>
+          <p style="margin-bottom: 0;">${m.cliente}</p>
+        </div>
+
+        <h2>${m.questao.enunciado}</h2>
+        
+        <div style="margin-top: 16px;">
+          ${alternativasHTML}
+        </div>
+
+        ${executando ? `
+          <div style="text-align: center; margin-top: 20px; padding: 20px;">
+            <h3 style="color: var(--warn);">⚙️ Robô executando o código...</h3>
+            <div style="font-family: monospace; margin-top: 10px;">
+              ${state.fabrica?.pecasProcessadas || 0} / ${m.fabrica.totalPecas} peças processadas
+            </div>
+            <div class="boot-progress-track" style="margin-top: 10px; height: 6px;">
+              <div class="boot-progress-fill" style="width: ${((state.fabrica?.pecasProcessadas || 0) / m.fabrica.totalPecas) * 100}%"></div>
+            </div>
+          </div>
+        ` : ''}
+
+      </div>
+
+      <div class="screen-footer">
+        <button class="btn" onclick="window.OZ.voltarOficina()">Sair</button>
+        
+        <button 
+          class="btn primary" 
+          onclick="window.OZ.executarSimulacao()"
+          ${!alternativaSelecionada || executando ? 'disabled' : ''}
+        >
+          ${executando ? 'Executando...' : '▶ Testar este Código'}
+        </button>
+      </div>
+    </div>
+  `;
+}
+// ======================================================
+// RESULTADO
+// ======================================================
+function renderResultado() {
+  const m = getMissao(state.desafioAtual);
+  const ok = state.avaliacao?.aprovado;
+  const recompensa = state._ultimaRecompensa || m?.recompensa || { xp: 0, dinheiro: 0 };
+  const xpGanho = ok ? recompensa.xp : 0;
+  const dinheiroGanho = ok ? recompensa.dinheiro : 0;
+
+  return `
+    <div class="screen" style="position:relative;overflow:hidden;">
+      ${ok ? '<canvas id="confetti-canvas"></canvas>' : ''}
+      <div class="screen-header" style="position:relative;z-index:2;">
+        <h1 style="color:${ok ? 'var(--ok)' : 'var(--err)'}; text-shadow:0 0 20px ${ok ? 'rgba(63,185,80,0.5)' : 'rgba(248,81,73,0.5)'};">
+          ${ok ? '🎉 Missão Concluída' : '❌ Missão Falhou'}
+        </h1>
+      </div>
+      <div class="screen-body" style="position:relative;z-index:2;text-align:center;">
+        ${ok ? `
+          <p style="font-size:18px;margin-bottom:24px;">Você resolveu o problema corretamente!</p>
+          <div style="display:inline-flex; flex-direction:column; gap:16px; padding:32px 48px; background:linear-gradient(135deg,var(--ok-bg),var(--accent-bg)); border:2px solid var(--ok); border-radius:16px; box-shadow:0 0 40px rgba(63,185,80,0.3);">
+            <div style="font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:2px;">Recompensas</div>
+            <div style="display:flex; gap:48px; justify-content:center; align-items:center;">
+              <div><div style="font-size:36px;">💰</div><div style="font-size:28px;font-weight:bold;color:var(--ok);" id="dinheiro-counter">R$ 0</div></div>
+              <div><div style="font-size:36px;">⭐</div><div style="font-size:28px;font-weight:bold;color:var(--accent);" id="xp-counter">0 XP</div></div>
+            </div>
+            <div style="font-size:12px;color:var(--muted);">+${xpGanho} XP &nbsp;·&nbsp; +R$ ${dinheiroGanho}</div>
+          </div>
+          <div style="margin-top:24px;font-size:14px;color:var(--muted);">
+            Total acumulado: 💰 R$ <strong style="color:var(--ok);">${state.dinheiro}</strong> &nbsp;·&nbsp; ⭐ <strong style="color:var(--accent);">${state.xp} XP</strong>
+          </div>
+        ` : `
+          <p style="font-size:18px;margin-bottom:24px;">A missão não foi concluída. Volte à oficina e tente novamente.</p>
+        `}
+      </div>
+      <div class="screen-footer" style="position:relative;z-index:2;justify-content:center;">
+        <button class="btn primary" onclick="window.OZ.voltarOficina()">Voltar para a Oficina</button>
+        ${ok ? `<button class="btn" onclick="window.OZ.abrirLoja()">🛒 Ir para a Loja</button>` : ''}
+      </div>
+    </div>
+  `;
+}
+
+// ======================================================
+// PAINEL LATERAL (CORRIGIDO)
+// ======================================================
+function atualizarPainelLateral() {
+  const fase = flow.fase;
+  if (fase === FASE.WORKSHOP || fase === FASE.LOJA) return;
+
+  const m = getMissao(state.desafioAtual);
+  if (!m) {
+    setText('panel-title', 'Missão');
+    setText('panel-sub', '—');
+    setHTML('panel-content', '');
+    return;
+  }
+
+  setText('panel-title', m.titulo);
+  setText('panel-sub', m.subtitulo || '—');
+
+  let contentHTML = '';
+
+  if (m.tipo === 'conversao') {
+    contentHTML = `
+      <div class="checklist-item ${state.conversaoHex ? 'done' : ''}">
+        <div class="check">${state.conversaoHex ? '✓' : ''}</div> Hex: ${state.conversaoHex || '?'}
+      </div>
+      <div class="checklist-item ${state.conversaoBin ? 'done' : ''}">
+        <div class="check">${state.conversaoBin ? '✓' : ''}</div> Bin: ${state.conversaoBin || '?'}
+      </div>
+    `;
+  } else if (m.tipo === 'automacao') {
+    const f = state.fabrica;
+    if (f) {
+      contentHTML = `
+        <div class="checklist-item ${f.pecasProcessadas > 0 ? 'done' : ''}">
+          <div class="check">${f.pecasProcessadas > 0 ? '✓' : ''}</div>
+          Processadas: ${f.pecasProcessadas}/${m.fabrica.totalPecas}
+        </div>
+        <div class="checklist-item" style="color:${f.energia < 30 ? 'var(--err)' : 'var(--accent)'}">
+          <div class="check">⚡</div> Energia: ${f.energia}%
+        </div>
+        <div class="checklist-item" style="color:${f.qualidade < 50 ? 'var(--err)' : 'var(--ok)'}">
+          <div class="check">⚖️</div> Qualidade: ${f.qualidade}%
+        </div>
+      `;
+    }
+  } else {
+    const proc = state.procedimento || {};
+    const procHTML = (m.procedimentos || []).map(p => {
+      const done = !!proc[p.id];
+      return `<div class="checklist-item ${done ? 'done' : ''}"><div class="check">${done ? '✓' : ''}</div>${p.label}</div>`;
+    }).join('');
+
+    const testesOK = state.testes?.total > 0 && state.testes.pass === state.testes.total;
+    const totalTestes = m.tabela?.length || 8;
+
+    contentHTML = `
+      <div class="checklist-item ${state.hipotese ? 'done' : ''}"><div class="check">${state.hipotese ? '✓' : ''}</div>Hipótese Escolhida</div>
+      ${procHTML}
+      <div class="checklist-item ${testesOK ? 'done' : ''}"><div class="check">${testesOK ? '✓' : ''}</div>Testes ${state.testes?.pass || 0}/${totalTestes}</div>
+    `;
+  }
+
+  setHTML('panel-content', `
+    ${contentHTML}
+    <hr style="margin:16px 0;border-color:var(--border);">
+    <div style="display:flex;justify-content:space-between;padding:6px 0;"><span style="color:var(--muted);font-size:14px;">💰 Dinheiro</span><strong style="color:var(--ok);font-size:16px;">R$ ${state.dinheiro}</strong></div>
+    <div style="display:flex;justify-content:space-between;padding:6px 0;"><span style="color:var(--muted);font-size:14px;">⭐ XP</span><strong style="color:var(--accent);font-size:16px;">${state.xp} XP</strong></div>
+  `);
+}
+
+// ======================================================
+// LOJA E VISUALIZADOR 3D (Mantidos)
+// ======================================================
+function liberarRecursosModelo(model) { if (!model) return; const geometrias = new Set(); const materiais = new Set(); const texturas = new Set(); model.traverse(obj => { if (obj.geometry) geometrias.add(obj.geometry); if (!obj.material) return; const lista = Array.isArray(obj.material) ? obj.material : [obj.material]; lista.forEach(mat => { materiais.add(mat); Object.values(mat).forEach(v => { if (v && v.isTexture) texturas.add(v); }); }); }); geometrias.forEach(g => g.dispose()); texturas.forEach(t => t.dispose()); materiais.forEach(m => m.dispose()); }
+function liberarModeloLoja() { if (!lojaViewer.model) return; if (lojaViewer.model.parent) lojaViewer.model.parent.remove(lojaViewer.model); liberarRecursosModelo(lojaViewer.model); lojaViewer.model = null; }
+function destruirViewerLoja() { lojaLoadToken++; if (lojaViewer.animationId !== null) cancelAnimationFrame(lojaViewer.animationId); if (lojaViewer.resizeObserver) lojaViewer.resizeObserver.disconnect(); liberarModeloLoja(); if (lojaViewer.controls) lojaViewer.controls.dispose(); if (lojaViewer.renderer) { lojaViewer.renderer.dispose(); if (lojaViewer.renderer.domElement.parentNode) lojaViewer.renderer.domElement.parentNode.removeChild(lojaViewer.renderer.domElement); } lojaViewer = { scene: null, camera: null, renderer: null, controls: null, loader: null, model: null, animationId: null, resizeObserver: null }; }
+
+function iniciarViewerLoja() {
+  const container = document.getElementById('loja-viewer'); if (!container) return;
+  const width = Math.max(container.clientWidth, 300); const height = Math.max(container.clientHeight, 280);
+  const scene = new THREE.Scene(); scene.background = new THREE.Color(0x101722);
+  const camera = new THREE.PerspectiveCamera(40, width / height, 0.01, 1000); camera.position.set(4, 3, 5);
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2)); renderer.setSize(width, height);
+  renderer.outputColorSpace = THREE.SRGBColorSpace; renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.2;
+  renderer.domElement.style.display = 'block'; renderer.domElement.style.width = '100%'; renderer.domElement.style.height = '100%'; container.appendChild(renderer.domElement);
+  const controls = new OrbitControls(camera, renderer.domElement); controls.enableDamping = true; controls.dampingFactor = 0.06; controls.enablePan = false; controls.minDistance = 1; controls.maxDistance = 15;
+  scene.add(new THREE.AmbientLight(0xffffff, 1.5)); const luzPrincipal = new THREE.DirectionalLight(0xffffff, 3); luzPrincipal.position.set(5, 8, 5); scene.add(luzPrincipal); const luzPreenchimento = new THREE.DirectionalLight(0x8abaff, 1.2); luzPreenchimento.position.set(-5, 3, -4); scene.add(luzPreenchimento);
+  const grid = new THREE.GridHelper(8, 16, 0x34445c, 0x263343); grid.position.y = -1.55; scene.add(grid);
+  lojaViewer.scene = scene; lojaViewer.camera = camera; lojaViewer.renderer = renderer; lojaViewer.controls = controls; lojaViewer.loader = new GLTFLoader();
+  function animar() { if (lojaViewer.renderer !== renderer) return; lojaViewer.animationId = requestAnimationFrame(animar); controls.update(); renderer.render(scene, camera); } animar();
+  if (typeof ResizeObserver !== 'undefined') { lojaViewer.resizeObserver = new ResizeObserver(() => { const w = container.clientWidth; const h = container.clientHeight; if (!w || !h) return; camera.aspect = w / h; camera.updateProjectionMatrix(); renderer.setSize(w, h); }); lojaViewer.resizeObserver.observe(container); }
+  carregarModeloLoja(itemLojaSelecionado);
+}
+
+function carregarModeloLoja(id) {
+  const item = listarItensLoja().find(i => i.id === id); if (!item || !lojaViewer.loader || !lojaViewer.scene) return;
+  const token = ++lojaLoadToken; liberarModeloLoja(); const status = document.getElementById('loja-model-status'); if (status) status.textContent = `Carregando ${item.nome}...`;
+  lojaViewer.loader.load(item.modelo3D, gltf => {
+    if (token !== lojaLoadToken || !lojaViewer.scene) { liberarRecursosModelo(gltf.scene); return; }
+    const model = gltf.scene; model.updateMatrixWorld(true); const boxOriginal = new THREE.Box3().setFromObject(model);
+    const size = boxOriginal.getSize(new THREE.Vector3()); const center = boxOriginal.getCenter(new THREE.Vector3()); const maiorDimensao = Math.max(size.x, size.y, size.z);
+    if (!Number.isFinite(maiorDimensao) || maiorDimensao <= 0) { if (status) status.textContent = 'Modelo 3D inválido ou vazio.'; liberarRecursosModelo(model); return; }
+    model.position.sub(center); const escala = 3 / maiorDimensao; model.scale.multiplyScalar(escala); model.updateMatrixWorld(true);
+    lojaViewer.scene.add(model); lojaViewer.model = model; const boxFinal = new THREE.Box3().setFromObject(model); const esfera = boxFinal.getBoundingSphere(new THREE.Sphere()); const raio = Math.max(esfera.radius, 0.5); const distancia = raio / Math.sin(THREE.MathUtils.degToRad(lojaViewer.camera.fov / 2));
+    lojaViewer.camera.position.set(esfera.center.x + distancia * 0.9, esfera.center.y + distancia * 0.65, esfera.center.z + distancia * 1.1);
+    lojaViewer.camera.near = Math.max(0.01, distancia / 100); lojaViewer.camera.far = distancia * 100; lojaViewer.camera.updateProjectionMatrix();
+    lojaViewer.controls.target.copy(esfera.center); lojaViewer.controls.minDistance = raio * 1.2; lojaViewer.controls.maxDistance = raio * 8; lojaViewer.controls.update(); if (status) status.textContent = `${item.nome} carregado · Arraste para girar`;
+  }, undefined, erro => { if (token !== lojaLoadToken) return; if (status) status.textContent = `Falha ao carregar ${item.nome}. Verifique o arquivo GLB.`; });
+}
+
+function renderLoja() {
+  const personagens = listarPersonagens(); const atual = personagens.find(p => p.equipado) || personagens[0]; const saldo = state.dinheiro;
+  const todosItens = listarItensLoja('todos').filter(item => item.id !== 'loja' && item.nome?.toLowerCase() !== 'loja');
+  const mostrarPersonagens = categoriaLojaAtiva === 'todos' || categoriaLojaAtiva === 'personagens'; const mostrarItens = categoriaLojaAtiva !== 'personagens';
+  const itens = categoriaLojaAtiva === 'todos' ? todosItens : listarItensLoja(categoriaLojaAtiva).filter(item => item.id !== 'loja' && item.nome?.toLowerCase() !== 'loja');
+  if (mostrarItens && itens.length > 0 && !itens.some(item => item.id === itemLojaSelecionado)) itemLojaSelecionado = itens[0].id;
+  const categorias = CATEGORIAS_LOJA.filter(c => c.id !== 'loja').map(c => { const quantidade = c.id === 'todos' ? personagens.length + todosItens.length : c.id === 'personagens' ? personagens.length : listarItensLoja(c.id).filter(item => item.id !== 'loja' && item.nome?.toLowerCase() !== 'loja').length; return { ...c, quantidade }; });
+  const botoesCategorias = categorias.map(c => `<button class="btn ${categoriaLojaAtiva === c.id ? 'primary' : ''}" data-categoria-loja="${c.id}" style="white-space:nowrap;">${c.emoji} ${c.nome} <small style="opacity:.7;">(${c.quantidade})</small></button>`).join('');
+  const cardsPersonagens = mostrarPersonagens ? personagens.map(p => { const ehYBot = p.id?.toLowerCase() === 'ybot'; const habilidade = ehYBot ? 'Elucubrações Inexequíveis · Criador de Mundos' : p.habilidade; const descricao = ehYBot ? 'Transforma ideias impossíveis em mundos, cenários e possibilidades.' : p.descricao; return `<div style="padding:16px; background:var(--bg); border-radius:10px; border:1px solid ${p.equipado ? 'var(--accent)' : 'var(--border)'};"><div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;"><div style="font-size:36px;">${p.emoji}</div><div><div style="font-size:16px;font-weight:bold;">${p.nome}</div><div style="font-size:12px;color:var(--accent);">${habilidade}</div></div></div><div style="font-size:13px; color:var(--muted); margin-bottom:12px; min-height:48px;">${descricao}</div>${p.equipado ? `<button class="btn" style="width:100%;" disabled>✓ Personagem atual</button>` : p.desbloqueado ? `<button class="btn primary" style="width:100%;" onclick="window.OZ.equiparPersonagem('${p.id}')">Equipar</button>` : `<button class="btn" style="width:100%;" ${saldo < p.preco ? 'disabled' : ''} onclick="window.OZ.comprarPersonagem('${p.id}')">Comprar · R$ ${p.preco}</button>`}</div>`; }).join('') : '';
+  const cardsItens = mostrarItens ? itens.map(item => { const selecionado = itemLojaSelecionado === item.id; return `<div data-item-loja="${item.id}" role="button" tabindex="0" aria-pressed="${selecionado}" style="padding:16px; background:var(--bg); border-radius:10px; border:2px solid ${selecionado ? 'var(--accent)' : 'var(--border)'}; display:flex; flex-direction:column; min-width:0; cursor:pointer; transition:border-color .2s, transform .2s;"><div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;"><div style="font-size:36px;">${item.emoji}</div><div style="min-width:0;"><div style="font-size:16px;font-weight:bold;">${item.nome}</div><div style="font-size:12px;color:var(--accent);">${item.categoria}</div></div></div><div style="font-size:13px; color:var(--muted); flex:1; margin-bottom:12px;">${item.descricao}</div><div style="padding:8px; background:var(--panel); border-radius:6px; font-size:12px; color:${selecionado ? 'var(--accent)' : 'var(--ok)'}; text-align:center;">${selecionado ? '✓ Selecionado · Visualizando' : '👁 Visualizar modelo 3D'}</div></div>`; }).join('') : '';
+  return `<div class="screen wide"><div class="screen-header"><h1>Implemente ideias</h1><span class="badge">💰 R$ ${saldo}</span></div><div class="screen-body" style="max-height:70vh;overflow-y:auto;">${mostrarPersonagens ? `<h2>Personagem atual</h2><div style="padding:20px; background:var(--bg); border-radius:10px; border:2px solid var(--accent); margin-bottom:24px;"><div style="display:flex; align-items:center; gap:16px;"><div style="font-size:48px;">${atual.emoji}</div><div><div style="font-size:20px; font-weight:bold; color:var(--accent);">${atual.nome}</div><div style="color:var(--muted); font-size:14px;">${atual.id?.toLowerCase() === 'ybot' ? 'Elucubrações Inexequíveis · Criador de Mundos' : atual.habilidade}</div></div></div></div>` : ''}<h2>Catálogo</h2><div style="display:flex; gap:8px; flex-wrap:wrap; margin:12px 0 20px;">${botoesCategorias}</div>${mostrarItens ? `<div style="margin:16px 0 24px; padding:14px; background:var(--bg); border:1px solid var(--border); border-radius:12px;"><div style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:10px;"><strong style="color:var(--accent);">🔬 Visualizador 3D</strong><span style="font-size:11px; color:var(--muted);">Arraste para girar · Scroll para aproximar</span></div><div id="loja-viewer" style="width:100%; height:340px; overflow:hidden; border-radius:8px; background:#101722;"></div><div id="loja-model-status" style="padding:10px 2px 0; font-size:12px; color:var(--muted); text-align:center;">Preparando visualizador...</div></div>` : ''}${mostrarPersonagens ? `<h3 style="margin:12px 0;color:var(--accent);">🤖 Personagens</h3><div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:12px; margin-bottom:24px;">${cardsPersonagens}</div>` : ''}${mostrarItens ? `<h3 style="margin:12px 0;color:var(--accent);">📦 Modelos e equipamentos</h3><div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:12px;">${cardsItens || '<p style="color:var(--muted);">Nenhum item nesta categoria.</p>'}</div>` : ''}</div><div class="screen-footer"><button class="btn" onclick="window.OZ.fecharLoja()">✕ Fechar</button></div></div>`;
+}
+
+function abrirScanner(tipo) {
+  if (tipo === 'bateria' || tipo === 'carregar_bateria') state.evidencias.push({ label: 'Bateria', valor: state.fisico.bateria + 'V', cls: 'ok' });
+  if (tipo === 'sensor_freio' || tipo === 'reconectar_sensor') state.evidencias.push({ label: 'Freio', valor: 'Divergência', cls: 'err' });
+  if (tipo === 'alarme' || tipo === 'desligar_alarme') state.evidencias.push({ label: 'Alarme', valor: 'Disparado', cls: 'err' });
+  render();
+}
+
+document.addEventListener('click', e => {
+  const target = e.target; if (!(target instanceof Element)) return;
+  const itemBtn = target.closest('[data-item-loja]');
+  if (itemBtn) { const id = itemBtn.dataset.itemLoja; itemLojaSelecionado = id; document.querySelectorAll('[data-item-loja]').forEach(card => { card.style.borderColor = card.dataset.itemLoja === id ? 'var(--accent)' : 'var(--border)'; }); carregarModeloLoja(id); return; }
+  const categoriaBtn = target.closest('[data-categoria-loja]');
+  if (categoriaBtn) { categoriaLojaAtiva = categoriaBtn.dataset.categoriaLoja; render(); return; }
+  const blocoBtn = target.closest('[data-bloco-index]');
+  if (blocoBtn) { const idx = parseInt(blocoBtn.dataset.blocoIndex, 10); const b = BLOCOS_DISPONIVEIS[idx]; if (b) window.OZ.addBloco(b.id, b.label); blocoBtn.blur(); return; }
+  const removeBtn = target.closest('[data-remove-index]');
+  if (removeBtn) { const idx = parseInt(removeBtn.dataset.removeIndex, 10); window.OZ.removeBloco(idx); removeBtn.blur(); return; }
+});
+
+function animarConclusao() {
+  const dinheiroEl = document.getElementById('dinheiro-counter'); const xpEl = document.getElementById('xp-counter'); const canvas = document.getElementById('confetti-canvas');
+  if (!dinheiroEl || !xpEl) return;
+  const alvoDinheiro = state.dinheiro; const alvoXp = state.xp; const recompensa = state._ultimaRecompensa || { xp: 100, dinheiro: 250 };
+  const atualDinheiroInicio = Math.max(0, alvoDinheiro - recompensa.dinheiro); const atualXpInicio = Math.max(0, alvoXp - recompensa.xp);
+  const duracao = 1500; const inicio = performance.now();
+  function tick(now) { const t = Math.min((now - inicio) / duracao, 1); const ease = 1 - Math.pow(1 - t, 3); const d = Math.round(atualDinheiroInicio + (alvoDinheiro - atualDinheiroInicio) * ease); const x = Math.round(atualXpInicio + (alvoXp - atualXpInicio) * ease); dinheiroEl.textContent = `R$ ${d}`; xpEl.textContent = `${x} XP`; if (t < 1) requestAnimationFrame(tick); } requestAnimationFrame(tick);
+  if (canvas) { canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; const ctx = canvas.getContext('2d'); const cores = ['#3fb950', '#58a6ff', '#ffd700', '#ff6b9d', '#a371f7']; const confetes = []; for (let i = 0; i < 150; i++) { confetes.push({ x: Math.random() * canvas.width, y: -20 - Math.random() * canvas.height, w: 6 + Math.random() * 8, h: 8 + Math.random() * 10, vx: (Math.random() - 0.5) * 4, vy: 2 + Math.random() * 4, rot: Math.random() * Math.PI * 2, vrot: (Math.random() - 0.5) * 0.3, cor: cores[Math.floor(Math.random() * cores.length)] }); } let confeteAtivo = true; function tickConfete() { if (!confeteAtivo || !canvas.isConnected) return; ctx.clearRect(0, 0, canvas.width, canvas.height); for (const c of confetes) { c.x += c.vx; c.y += c.vy; c.rot += c.vrot; c.vy += 0.05; if (c.y > canvas.height + 20) { c.y = -20; c.x = Math.random() * canvas.width; c.vy = 2 + Math.random() * 4; } ctx.save(); ctx.translate(c.x, c.y); ctx.rotate(c.rot); ctx.fillStyle = c.cor; ctx.fillRect(-c.w / 2, -c.h / 2, c.w, c.h); ctx.restore(); } requestAnimationFrame(tickConfete); } tickConfete(); setTimeout(() => { confeteAtivo = false; if (canvas.parentNode) canvas.parentNode.removeChild(canvas); }, 6000); }
+}
+
+export { render as renderScreens, abrirScanner, animarConclusao };
