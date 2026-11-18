@@ -1,7 +1,9 @@
+
 import * as THREE from 'three';
 
 export function createScene() {
   const scene = new THREE.Scene();
+  let destruida = false;
 
   const camera = new THREE.PerspectiveCamera(
     55,
@@ -26,11 +28,23 @@ export function createScene() {
   document.getElementById('scene').replaceWith(renderer.domElement);
   renderer.domElement.id = 'scene';
 
-  window.addEventListener('resize', () => {
+  function onResize() {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
-  });
+  }
+
+  function destruirScene(event) {
+    if (event?.persisted || destruida) return;
+    destruida = true;
+
+    window.removeEventListener('resize', onResize);
+    window.removeEventListener('pagehide', destruirScene);
+    renderer.dispose();
+  }
+
+  window.addEventListener('resize', onResize);
+  window.addEventListener('pagehide', destruirScene);
 
   return { scene, camera, renderer };
 }

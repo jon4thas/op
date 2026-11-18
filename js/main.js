@@ -64,11 +64,22 @@ instalarDebug({
   flow, interaction,
 });
 
-// fix de scroll do overlay
-document.addEventListener('focus', (e) => {
+
+ // fix de scroll do overlay
+function onFocus(e) {
   if (e.target.closest && e.target.closest('#screens-overlay')) {
     e.target.scrollIntoView({ block: 'nearest', behavior: 'instant' });
   }
-}, true);
+}
+
+function onPageHide(event) {
+  if (event?.persisted) return;
+
+  document.removeEventListener('focus', onFocus, true);
+  window.removeEventListener('pagehide', onPageHide);
+}
+
+document.addEventListener('focus', onFocus, true);
+window.addEventListener('pagehide', onPageHide);
 
 startLoop({ world, player, colliders, interaction, flow });
