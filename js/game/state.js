@@ -66,7 +66,11 @@ export function resetarProgresso() {
   state.boasVindasVistas = false;
   state.personagensDesbloqueados = ['default'];
   state.personagemAtual = 'default';
-  localStorage.removeItem(SAVE_KEY);
+  try {
+    localStorage.removeItem(SAVE_KEY);
+  } catch (e) {
+    console.warn('[state] erro ao resetar:', e);
+  }
 }
 
 carregarProgresso();
