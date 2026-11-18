@@ -1,3 +1,4 @@
+
 import { BLOCOS_DISPONIVEIS } from '../../game/evaluator.js';
 import { renderScreens }      from '../screens.js';
 import {
@@ -7,9 +8,14 @@ import {
   getItemLojaSelecionado,
 } from './loja.js';
 
+let listenerClick = null;
+
 export function instalarListeners() {
-  document.addEventListener('click', e => {
-    const target = e.target; if (!(target instanceof Element)) return;
+  if (listenerClick) return;
+
+  listenerClick = e => {
+    const target = e.target;
+    if (!(target instanceof Element)) return;
 
     const itemBtn = target.closest('[data-item-loja]');
     if (itemBtn) {
@@ -45,5 +51,14 @@ export function instalarListeners() {
       removeBtn.blur();
       return;
     }
-  });
+  };
+
+  document.addEventListener('click', listenerClick);
+}
+
+export function removerListeners() {
+  if (!listenerClick) return;
+
+  document.removeEventListener('click', listenerClick);
+  listenerClick = null;
 }
