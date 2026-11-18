@@ -1,5 +1,8 @@
 // js/game/input.js
+let inputAtivo = null;
+
 export function setupInput(domElement) {
+  if (inputAtivo) return inputAtivo;
 
   const keys = new Set();
   const edges = {
@@ -29,9 +32,23 @@ export function setupInput(domElement) {
   window.addEventListener('keyup', onKeyUp);
   window.addEventListener('blur', onBlur);
 
-  return {
+  const input = {
     keys,
     consumeJump()     { const v = edges.jump;     edges.jump = false;     return v; },
     consumeInteract() { const v = edges.interact; edges.interact = false; return v; },
+    destruir() {
+      window.removeEventListener('keydown', onKeyDown);
+      window.removeEventListener('keyup', onKeyUp);
+      window.removeEventListener('blur', onBlur);
+
+      keys.clear();
+      edges.jump = false;
+      edges.interact = false;
+
+      if (inputAtivo === input) inputAtivo = null;
+    },
   };
+
+  inputAtivo = input;
+  return input;
 }
