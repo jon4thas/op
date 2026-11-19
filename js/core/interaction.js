@@ -3,14 +3,19 @@ import { flow, FASE } from '../game/flow.js';
 import { getMissao } from '../game/missoes/index.js';
 import { mostrarToast } from '../ui/toast.js';
 
+let interactionAtiva = null;
+
 export function setupInteraction({
   player,
   stations,
   interactionDistance = 10
 }) {
+  interactionAtiva?.destruir();
+
   const prompt = document.getElementById('interaction-prompt');
 
   let stationFocada = null;
+  let destruida = false;
 
   // Aceita tanto um array quanto o objeto retornado pelo módulo
   // de estações, desde que contenha a propriedade stations.
@@ -21,6 +26,8 @@ export function setupInteraction({
       : [];
 
   function atualizar() {
+    if (destruida) return;
+
     if (!player?.mesh?.position) {
       stationFocada = null;
 
@@ -75,7 +82,7 @@ export function setupInteraction({
   }
 
   function iniciarInteracao(e) {
-    if (e.code !== 'KeyE' || e.repeat) return;
+    if (destruida || e.code !== 'KeyE' || e.repeat) return;
 
     if (flow.fase !== FASE.WORKSHOP) return;
 
@@ -98,18 +105,40 @@ export function setupInteraction({
 
   document.addEventListener('keydown', iniciarInteracao);
 
-  return {
+  function destruir() {
+    if (destruida) return;
+
+    destruida = true;
+
+    document.removeEventListener('keydown', iniciarInteracao);
+    window.removeEventListener('pagehide', onPageHide);
+
+    stationFocada = null;
+
+    if (prompt) prompt.style.display = 'none';
+
+    if (interactionAtiva === interaction) {
+      interactionAtiva = null;
+    }
+  }
+
+  function onPageHide(event) {
+    if (event?.persisted) return;
+
+    destruir();
+  }
+
+  const interaction = {
     atualizar,
 
     getStationFocada: () => stationFocada,
 
-    destruir() {
-      document.removeEventListener('keydown', iniciarInteracao);
-
-      stationFocada = null;
-
-      if (prompt) prompt.style.display = 'none';
-    }
+    destruir
   };
-}
 
+  interactionAtiva = interaction;
+
+  window.addEventListener('pagehide', onPageHide);
+
+  return interaction;
+}

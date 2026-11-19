@@ -12,6 +12,7 @@ import { overlay }             from './helpers.js';
 let categoriaLojaAtiva  = 'todos';
 let itemLojaSelecionado = null;
 let lojaLoadToken       = 0;
+let lojaEscHandler      = null;
 
 const lojaViewer = {
   scene: null, camera: null, renderer: null, controls: null, loader: null,
@@ -281,18 +282,34 @@ function criarModalViewer() {
   });
 
   document.body.appendChild(modal);
+if (!lojaEscHandler) {
+  lojaEscHandler = function onLojaEscape(e) {
+    if (e.key !== 'Escape') return;
 
-  if (!window.__lojaEscBind) {
-    window.__lojaEscBind = true;
-    document.addEventListener('keydown', (e) => {
-      if (e.key !== 'Escape') return;
-      const m = document.getElementById('loja-viewer-modal');
-      if (m && m.classList.contains('open')) {
-        e.preventDefault();
-        fecharViewerLoja();
-      }
-    }, true);
+    const m = document.getElementById('loja-viewer-modal');
+
+    if (m && m.classList.contains('open')) {
+      e.preventDefault();
+      fecharViewerLoja();
+    }
+  };
+
+  window.__lojaEscBind = true;
+
+  document.addEventListener('keydown', lojaEscHandler, true);
+
+  function onLojaPageHide(event) {
+    if (event?.persisted) return;
+
+    document.removeEventListener('keydown', lojaEscHandler, true);
+    window.removeEventListener('pagehide', onLojaPageHide);
+
+    lojaEscHandler = null;
+    window.__lojaEscBind = false;
   }
+
+  window.addEventListener('pagehide', onLojaPageHide);
+}
 }
 
 // ======================================================
